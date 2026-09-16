@@ -1,0 +1,2080 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#E9EDF1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="מזגן">
+<title>מזגן סלון — Mazgan-1</title>
+<style>
+:root{
+  /* פונטים של המערכת בלבד. שום נכס חיצוני לא נטען — הקופסה בלי אינטרנט. */
+  --sans:system-ui,-apple-system,'Segoe UI','Assistant','Heebo',Arial,sans-serif;
+  --serif:'Frank Ruhl Libre','David Libre',David,'Segoe UI',Georgia,serif;
+  --ink:#16202B;
+  --ink-2:#4A5A69;
+  --ink-3:#7E8E9C;
+  --paper:#E9EDF1;
+  --card:#FFFFFF;
+  --rule:#D3DBE2;
+  --heat:#C2410C;
+  --heat-soft:#FDEBE2;
+  --cool:#0E7490;
+  --cool-soft:#E1F1F5;
+  --off:#8494A2;
+  --off-soft:#EEF2F5;
+  --focus:#16202B;
+  --r:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.num{font-family:var(--sans);font-feature-settings:"tnum";font-variant-numeric:tabular-nums}
+button{font-family:inherit;font-size:inherit;cursor:pointer;border:none;background:none;color:inherit}
+button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
+
+/* ---------- shell ---------- */
+.wrap{max-width:760px;margin:0 auto;padding:0 20px 80px}
+
+/* ---------- header ---------- */
+header{
+  background:var(--card);
+  border-bottom:1px solid var(--rule);
+  padding:22px 0 18px;
+  margin-bottom:26px;
+}
+.hd{max-width:760px;margin:0 auto;padding:0 20px}
+.hd-top{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+h1{
+  font-family:var(--serif);
+  font-weight:700;
+  font-size:38px;
+  line-height:1.1;
+  margin:0;
+  letter-spacing:-.01em;
+}
+.boxtag{
+  font-size:13px;font-weight:700;letter-spacing:.08em;
+  color:var(--ink-3);
+  border:1px solid var(--rule);
+  border-radius:999px;padding:3px 11px;
+  white-space:nowrap;
+}
+.hd-meta{
+  display:flex;gap:26px;flex-wrap:wrap;
+  margin-top:14px;padding-top:14px;
+  border-top:1px solid var(--rule);
+  font-size:15px;
+}
+.meta b{display:block;font-size:12px;font-weight:700;letter-spacing:.07em;color:var(--ink-3);margin-bottom:2px}
+.meta span{color:var(--ink)}
+.meta .warn{color:var(--heat);font-weight:700}
+.meta.hide{display:none}
+.netsec h4{margin:14px 0 6px;font-size:12.5px;font-weight:700;letter-spacing:.07em;color:var(--ink-3)}
+.netsec .row2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+
+/* ---------- sun anchor / warnings / day adjust ---------- */
+.suntag{
+  margin-inline-start:auto;font-size:12.5px;font-weight:700;
+  color:#8A6A1F;background:#FBF3DF;border-radius:999px;padding:2px 9px;white-space:nowrap;
+}
+.warnbar{
+  margin-top:12px;background:#FBF3DF;border-radius:9px;padding:9px 12px;
+  font-size:14px;line-height:1.45;color:#6E5514;
+}
+.warnbar div+div{margin-top:5px}
+.clockwarn{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:15px;font-weight:600}
+.clockwarn.hide{display:none}
+.clockwarn .save{padding:7px 14px;font-size:15px;white-space:nowrap}
+h1.editable{cursor:pointer}
+h1.editable:hover{text-decoration:underline dashed;text-underline-offset:6px}
+.dayadj{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  margin-top:12px;padding-top:11px;border-top:1px dashed var(--rule);
+}
+.dayadj .lb{font-size:12.5px;font-weight:700;letter-spacing:.06em;color:var(--ink-3)}
+.dayadj .tv{font-size:16px;font-weight:700;min-width:62px;text-align:center}
+.dayadj .sep{width:1px;height:22px;background:var(--rule);margin:0 3px}
+.stepbtn{
+  width:34px;height:34px;border-radius:9px;border:1px solid var(--rule);
+  font-size:20px;font-weight:700;color:var(--ink-2);
+  display:flex;align-items:center;justify-content:center;line-height:1;
+}
+.stepbtn:hover:not(:disabled){border-color:var(--ink);color:var(--ink)}
+.stepbtn:disabled{opacity:.35;cursor:not-allowed}
+.modebtn{
+  height:34px;padding:0 12px;border-radius:9px;border:1px solid var(--rule);
+  font-size:14px;font-weight:600;color:var(--ink-2);
+}
+.modebtn:hover{border-color:var(--ink);color:var(--ink)}
+.sunhint{margin-top:10px;font-size:13.5px;line-height:1.55;color:var(--ink-2)}
+.locbtn{border-bottom:1px dashed var(--ink-3);font-size:15px;padding:0;text-align:right}
+.locbtn:hover{color:var(--ink);border-color:var(--ink)}
+.loclist{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.loclist button{border:1px solid var(--rule);border-radius:10px;padding:8px 11px;text-align:right;font-size:15px;font-weight:600;line-height:1.3}
+.loclist button:hover{border-color:var(--ink)}
+.loclist button.sel{background:var(--ink);color:#fff;border-color:var(--ink)}
+.loclist small{display:block;font-size:11.5px;font-weight:400;color:var(--ink-3);margin-top:2px}
+.loclist button.sel small{color:#AEBCC8}
+.manual{display:grid;gap:11px;margin-top:4px}
+.manual label{display:grid;gap:5px;font-size:12.5px;font-weight:700;letter-spacing:.06em;color:var(--ink-3)}
+.manual input{border:1px solid var(--rule);border-radius:9px;padding:9px 11px;font:inherit;font-size:16px}
+#anchorBody{margin-top:12px}
+
+/* ---------- שלט קבוע ---------- */
+.remote{
+  background:var(--card);border:1px solid var(--rule);border-radius:var(--r);
+  margin-bottom:22px;overflow:hidden;
+}
+.rm-hd{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:15px 20px 13px;border-bottom:1px solid var(--rule);
+}
+.rm-hd h2{font-family:var(--serif);font-size:21px;font-weight:700;margin:0}
+.rm-state{font-size:14.5px;color:var(--ink-2);flex:1}
+.rm-state b{color:var(--ink)}
+.pwr{
+  height:38px;padding:0 17px;border-radius:10px;border:1px solid var(--rule);
+  font-weight:700;font-size:15px;color:var(--ink-2);display:flex;align-items:center;gap:8px;
+}
+.pwr:hover{border-color:var(--ink);color:var(--ink)}
+.pwr[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pwr .bulb{width:10px;height:10px;border-radius:50%;background:var(--off);flex:none}
+.pwr[aria-pressed="true"] .bulb{background:#7FE0A0}
+.rm-body{padding:14px 20px 16px}
+.rm-body.dim{opacity:.42;pointer-events:none}
+.rm-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:13px}
+.rm-row>.lb{font-size:12.5px;font-weight:700;letter-spacing:.06em;color:var(--ink-3);min-width:74px}
+.rm-row .segbar{flex:1;min-width:190px}
+.rm-temp{display:flex;align-items:center;gap:14px}
+.rm-temp .tv{font-size:34px;font-weight:700;line-height:1;min-width:74px;text-align:center}
+.rm-temp .tv small{font-size:16px;font-weight:600;color:var(--ink-3)}
+.rm-temp input[type=range]{flex:1;min-width:150px}
+.rm-ft{
+  border-top:1px solid var(--rule);padding:11px 20px 13px;background:#FBFCFD;
+  font-size:14px;line-height:1.5;color:var(--ink-2);
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.rm-ft .st{font-weight:700;color:var(--ink)}
+.rm-ft .st.pend{color:#8A6A1F}
+.rm-ft .st.fail{color:var(--heat)}
+.rm-ft .note{flex:1;min-width:230px;font-size:13px;color:var(--ink-3)}
+
+/* ---------- day card ---------- */
+.day{
+  background:var(--card);
+  border:1px solid var(--rule);
+  border-radius:var(--r);
+  margin-bottom:18px;
+  overflow:hidden;
+}
+.day-hd{position:relative;padding:18px 20px 14px 84px;border-bottom:1px solid var(--rule)}
+.day-title{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.day-title h2{
+  font-family:var(--serif);
+  font-size:24px;font-weight:700;margin:0;
+}
+.pill{
+  font-size:12.5px;font-weight:700;padding:3px 10px;border-radius:999px;
+  background:var(--off-soft);color:var(--ink-2);
+}
+.pill.rec{background:#E4EDE4;color:#2F5D3A}
+.entry{
+  margin-top:9px;font-size:14.5px;color:var(--ink-2);
+  display:flex;align-items:center;gap:7px;
+}
+.dotmini{width:9px;height:9px;border-radius:50%;flex:none}
+
+.blank-state{
+  background:var(--card);
+  border:1px dashed var(--rule);
+  border-radius:var(--r);
+  padding:52px 26px;
+  text-align:center;
+}
+.blank-state h2{
+  font-family:var(--serif);
+  font-size:25px;margin:0 0 10px;font-weight:700;
+}
+.blank-state p{margin:0;color:var(--ink-2);font-size:16px;line-height:1.6}
+.daydel{
+  position:absolute;top:16px;left:16px;
+  height:32px;padding:0 11px;border-radius:9px;
+  border:1px solid var(--rule);
+  color:var(--ink-2);font-size:14px;font-weight:600;line-height:1;
+  display:flex;align-items:center;gap:6px;
+}
+.daydel:hover{background:var(--heat-soft);color:var(--heat);border-color:var(--heat)}
+
+/* ---------- timeline ---------- */
+.tl{padding:6px 20px 4px}
+.ev{
+  display:grid;
+  grid-template-columns:64px 26px 1fr;
+  align-items:stretch;
+  min-height:66px;
+}
+.ev-time{
+  padding-top:16px;
+  font-size:19px;font-weight:500;
+  color:var(--ink);
+  text-align:left;
+  padding-left:8px;
+}
+.rail{position:relative;display:flex;justify-content:center}
+.rail .seg{position:absolute;top:0;bottom:0;width:3px;background:var(--rule)}
+.rail .seg.after{top:24px;bottom:-1px}
+.rail .seg.before{top:0;height:24px}
+.node{
+  position:absolute;top:16px;
+  width:15px;height:15px;border-radius:50%;
+  background:var(--card);border:3px solid var(--off);
+  z-index:2;
+}
+.node.on{background:var(--off)}
+.ev-body{padding:8px 4px 10px 0}
+.chip{
+  width:100%;text-align:right;
+  border:1px solid var(--rule);
+  border-radius:11px;
+  padding:11px 14px;
+  background:var(--card);
+  transition:border-color .12s,background .12s;
+  display:flex;align-items:center;gap:10px;
+}
+.chip:hover{border-color:var(--ink-3);background:#FAFCFD}
+.chip .lead{font-weight:700}
+.chip .rest{color:var(--ink-2);font-size:15.5px}
+.chip.heat{border-right:5px solid var(--heat)}
+.chip.cool{border-right:5px solid var(--cool)}
+.chip.off{border-right:5px solid var(--off)}
+
+.empty{
+  padding:22px 4px 24px;color:var(--ink-3);font-size:15.5px;
+}
+
+/* ---------- day footer ---------- */
+.day-ft{
+  border-top:1px solid var(--rule);
+  padding:14px 20px 16px;
+  background:#FBFCFD;
+}
+.carry{
+  display:flex;gap:10px;align-items:flex-start;
+  background:var(--heat-soft);
+  border-radius:10px;padding:11px 13px;margin-bottom:13px;
+  font-size:14.5px;line-height:1.45;
+}
+.carry b{color:var(--heat)}
+.carry button{text-decoration:underline;font-weight:700;color:var(--heat);white-space:nowrap}
+.ft-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.addbtn{
+  border:1.5px dashed var(--rule);border-radius:10px;
+  padding:9px 15px;font-weight:700;color:var(--ink-2);
+}
+.addbtn:hover{border-color:var(--ink-3);color:var(--ink)}
+.spacer{flex:1}
+.chk{display:flex;align-items:center;gap:8px;font-size:15px;cursor:pointer;user-select:none}
+.chk input{width:19px;height:19px;accent-color:var(--ink);cursor:pointer}
+.save{
+  background:var(--ink);color:#fff;border-radius:10px;
+  padding:9px 20px;font-weight:700;
+}
+.save:hover{background:#0C1620}
+.save.done{background:#2F5D3A}
+
+/* ---------- add day ---------- */
+.plusrow{display:flex;justify-content:center;margin:6px 0 0}
+.plus{
+  width:52px;height:52px;border-radius:50%;
+  background:var(--card);border:1px solid var(--rule);
+  font-size:26px;color:var(--ink-2);line-height:1;
+}
+.plus:hover{border-color:var(--ink);color:var(--ink)}
+
+/* ---------- sheet ---------- */
+.scrim{
+  position:fixed;inset:0;background:rgba(16,26,36,.42);
+  display:none;align-items:flex-end;justify-content:center;z-index:50;
+}
+.scrim.open{display:flex}
+.sheet{
+  background:var(--card);width:100%;max-width:520px;
+  border-radius:18px 18px 0 0;
+  padding:20px 22px 26px;
+  max-height:92vh;overflow-y:auto;
+  animation:up .18s ease-out;
+}
+@keyframes up{from{transform:translateY(16px);opacity:.6}to{transform:none;opacity:1}}
+@media(min-width:620px){
+  .scrim{align-items:center}
+  .sheet{border-radius:18px;max-height:88vh}
+}
+.sheet-hd{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.sheet-hd h3{font-family:var(--serif);font-size:22px;margin:0;flex:1}
+.sheet-hd .sub{font-size:14px;color:var(--ink-2);margin-top:3px}
+.sheet-hd .sub .rec{color:#2F5D3A;font-weight:700}
+.x{font-size:24px;color:var(--ink-3);line-height:1;padding:2px 6px}
+.x:hover{color:var(--ink)}
+
+.field{margin-bottom:18px}
+.field>label{display:block;font-size:12.5px;font-weight:700;letter-spacing:.06em;color:var(--ink-3);margin-bottom:7px}
+.timebtn{
+  width:100%;border:1px solid var(--rule);border-radius:11px;
+  padding:14px;font-size:30px;font-weight:500;text-align:center;
+}
+.timebtn:hover{border-color:var(--ink-3)}
+
+.segbar{display:flex;gap:8px}
+.segbar button{
+  flex:1;border:1px solid var(--rule);border-radius:10px;
+  padding:11px 4px;font-weight:600;color:var(--ink-2);
+}
+.segbar button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.segbar.mode button[aria-pressed="true"][data-v="heat"]{background:var(--heat);border-color:var(--heat)}
+.segbar.mode button[aria-pressed="true"][data-v="cool"]{background:var(--cool);border-color:var(--cool)}
+
+.tempwrap{border:1px solid var(--rule);border-radius:11px;padding:16px 16px 8px}
+.tempval{text-align:center;font-size:46px;font-weight:700;line-height:1;margin-bottom:4px}
+.tempval small{font-size:19px;font-weight:600;color:var(--ink-3)}
+.ticks{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3);padding:0 2px}
+input[type=range]{width:100%;accent-color:var(--ink);height:30px}
+.more{margin-top:4px}
+.more summary{cursor:pointer;font-weight:700;font-size:15px;color:var(--ink-2);padding:6px 0}
+.more[open] summary{margin-bottom:12px}
+
+.sheet-ft{display:flex;gap:10px;margin-top:22px}
+.sheet-ft .save{flex:1;text-align:center}
+.del{border:1px solid var(--rule);border-radius:10px;padding:9px 16px;color:var(--heat);font-weight:700}
+.del:hover{border-color:var(--heat)}
+
+/* ---------- calendar ---------- */
+.quick{display:flex;gap:8px;margin-bottom:18px}
+.quick button{
+  flex:1;border:1px solid var(--rule);border-radius:11px;
+  padding:13px 4px;font-weight:700;
+}
+.quick button:hover:not(:disabled){border-color:var(--ink);background:#FAFCFD}
+.quick button:disabled{opacity:.38;cursor:not-allowed}
+.calnav{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.calnav .mname{flex:1;text-align:center;font-family:var(--serif);font-size:19px;font-weight:700}
+.calnav button{
+  width:38px;height:38px;border-radius:10px;border:1px solid var(--rule);
+  font-size:18px;color:var(--ink-2);line-height:1;
+}
+.calnav button:hover{border-color:var(--ink);color:var(--ink)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal .wd{
+  text-align:center;font-size:12px;font-weight:700;color:var(--ink-3);
+  padding-bottom:6px;
+}
+.cal button{
+  aspect-ratio:1;border-radius:10px;font-size:16px;font-weight:500;
+  display:flex;align-items:center;justify-content:center;
+}
+.cal button:hover:not(:disabled){background:#DFE6EC}
+.cal button:disabled{color:#C3CCD4;cursor:not-allowed}
+.cal button.taken{background:var(--off-soft);color:var(--ink-3);cursor:not-allowed}
+.cal button.today{box-shadow:inset 0 0 0 1.5px var(--ink-3)}
+.cal .blank{visibility:hidden}
+
+/* ---------- clock ---------- */
+.clockhd{text-align:center;margin-bottom:10px}
+.clockhd .big{font-size:44px;font-weight:500;letter-spacing:.02em}
+.clockhd .big span{color:var(--ink-3);cursor:pointer}
+.clockhd .big span.act{color:var(--ink)}
+.clockhd .hint{font-size:13.5px;color:var(--ink-3);margin-top:2px}
+.face{
+  position:relative;width:288px;height:288px;margin:14px auto 4px;
+  border-radius:50%;background:#F2F5F8;
+}
+.face .hand{
+  position:absolute;left:50%;bottom:50%;width:2px;
+  background:var(--ink);transform-origin:bottom center;
+  transition:transform .16s ease-out,height .16s ease-out;
+}
+.face .hub{
+  position:absolute;left:50%;top:50%;width:9px;height:9px;
+  margin:-4.5px 0 0 -4.5px;border-radius:50%;background:var(--ink);z-index:3;
+}
+.face .n{
+  position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:17px;font-weight:500;z-index:2;
+}
+.face .n.inner{font-size:14px;color:var(--ink-2);width:34px;height:34px;margin:-17px 0 0 -17px}
+.face .n:hover{background:#DFE6EC}
+.face .n.sel{background:var(--ink);color:#fff}
+.face .n.sel:hover{background:var(--ink)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hd">
+    <div class="hd-top">
+      <h1 id="profName" class="editable" title="לחץ לשינוי השם">מזגן סלון</h1>
+      <span class="boxtag num">Mazgan-1</span>
+    </div>
+    <div class="hd-meta">
+      <div class="meta"><b>השעה עכשיו</b><span class="num" id="nowClock">—</span></div>
+      <div class="meta"><b>הפעולה הבאה</b><span id="nextEv">—</span></div>
+      <div class="meta"><b>שודר לאחרונה</b><span id="lastEv">—</span></div>
+      <div class="meta"><b>מיקום השמש</b><button class="locbtn" id="locBtn">—</button></div>
+      <div class="meta hide" id="netMeta"><b>שליטה מרחוק</b><button class="locbtn" id="netBtn">—</button></div>
+    </div>
+    <div class="warnbar clockwarn hide" id="clockWarn">
+      <span id="clockWarnTxt"></span>
+      <button class="save" id="clockSync">כוון את שעון הקופסה</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="remote" id="remote">
+    <div class="rm-hd">
+      <h2>שלט</h2>
+      <div class="rm-state" id="rmState">—</div>
+      <button class="pwr" id="rmPwr" aria-pressed="false"><span class="bulb"></span><span id="rmPwrTxt">הדלק</span></button>
+    </div>
+    <div class="rm-body" id="rmBody">
+      <div class="rm-row" id="rmRowMode"><span class="lb">מצב</span><div class="segbar mode" id="rSegMode"></div></div>
+      <div class="rm-row" id="rmRowTemp">
+        <span class="lb">טמפרטורה</span>
+        <div class="rm-temp" style="flex:1">
+          <span class="tv num"><span id="rTempVal">25</span><small>°</small></span>
+          <input type="range" id="rTempRange" min="0" max="14" step="1" value="9" aria-label="טמפרטורה בשלט">
+        </div>
+      </div>
+      <div class="rm-row" id="rmRowFan"><span class="lb">מאוורר</span><div class="segbar" id="rSegFan"></div></div>
+      <div class="rm-row" id="rmRowTurbo"><span class="lb">טורבו</span><div class="segbar" id="rSegTurbo"></div></div>
+      <div class="rm-row" id="rmRowSwing" style="margin-bottom:0"><span class="lb">נדנוד להב</span><div class="segbar" id="rSegSwing"></div></div>
+    </div>
+    <div class="rm-ft">
+      <span class="st" id="rmSend">—</span>
+    </div>
+  </section>
+
+  <div id="days"></div>
+  <div class="plusrow"><button class="plus" id="addDay" aria-label="הוסף יום">+</button></div>
+</div>
+
+<!-- event sheet -->
+<div class="scrim" id="evScrim">
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="evTitle">
+    <div class="sheet-hd">
+      <div style="flex:1">
+        <h3 id="evTitle">פעולה חדשה</h3>
+        <div class="sub" id="evSub">—</div>
+      </div>
+      <button class="x" id="evClose" aria-label="סגור">✕</button>
+    </div>
+
+    <div class="field">
+      <label>שעה</label>
+      <button class="timebtn num" id="evTime">15:00</button>
+    </div>
+
+    <div class="field" id="fieldAnchor">
+      <div><label class="chk"><input type="checkbox" id="anchorOn"> לזוז עם השמש</label></div>
+      <div id="anchorBody">
+        <div class="segbar" id="segAnchor">
+          <button data-v="rise">זריחה</button>
+          <button data-v="set">שקיעה</button>
+        </div>
+        <div class="sunhint" id="anchorHint"></div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>מה קורה</label>
+      <div class="segbar" id="segKind">
+        <button data-v="on">הפעלה</button>
+        <button data-v="off">כיבוי</button>
+      </div>
+    </div>
+
+    <div id="onFields">
+      <div class="field" id="fieldMode">
+        <label>מצב</label>
+        <div class="segbar mode" id="segMode"></div>
+      </div>
+
+      <div class="field" id="fieldTemp">
+        <label>טמפרטורה</label>
+        <div class="tempwrap">
+          <div class="tempval num"><span id="tempVal">25</span><small>°</small></div>
+          <input type="range" id="tempRange" min="0" max="14" step="1" value="9" aria-label="טמפרטורה">
+          <div class="ticks num" id="tempTicks"></div>
+        </div>
+      </div>
+
+      <details class="more" id="moreBox">
+        <summary>אפשרויות נוספות</summary>
+        <div class="field" id="fieldFan">
+          <label>מאוורר</label>
+          <div class="segbar" id="segFan"></div>
+        </div>
+        <div class="field" id="fieldTurbo">
+          <label>טורבו</label>
+          <div class="segbar" id="segTurbo"></div>
+        </div>
+        <div class="field" id="fieldSwing">
+          <label>נדנוד להב</label>
+          <div class="segbar" id="segSwing"></div>
+        </div>
+      </details>
+    </div>
+
+    <div class="sheet-ft">
+      <button class="del" id="evDel">מחק</button>
+      <button class="save" id="evSave">שמור פעולה</button>
+    </div>
+  </div>
+</div>
+
+<!-- day picker sheet -->
+<div class="scrim" id="dayScrim">
+  <div class="sheet" role="dialog" aria-modal="true" style="max-width:420px">
+    <div class="sheet-hd">
+      <h3>יום חדש</h3>
+      <button class="x" id="dayClose" aria-label="סגור">✕</button>
+    </div>
+    <div class="quick">
+      <button id="qToday">היום</button>
+      <button id="qTomorrow">מחר</button>
+    </div>
+    <div class="calnav">
+      <button id="calPrev" aria-label="חודש קודם">›</button>
+      <div class="mname" id="calName">—</div>
+      <button id="calNext" aria-label="חודש הבא">‹</button>
+    </div>
+    <div class="cal" id="cal"></div>
+  </div>
+</div>
+
+<!-- clock sheet -->
+<div class="scrim" id="clkScrim">
+  <div class="sheet" role="dialog" aria-modal="true" style="max-width:380px">
+    <div class="clockhd">
+      <div class="big num"><span id="clkH" class="act">15</span>:<span id="clkM">00</span></div>
+      <div class="hint" id="clkHint">בחר שעה</div>
+    </div>
+    <div class="face" id="face"><div class="hub"></div><div class="hand" id="hand"></div></div>
+    <div class="sheet-ft">
+      <button class="del" id="clkCancel" style="color:var(--ink-2)">ביטול</button>
+      <button class="save" id="clkOk">אישור</button>
+    </div>
+  </div>
+</div>
+
+<!-- location sheet -->
+<div class="scrim" id="locScrim">
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="locTitle" style="max-width:440px">
+    <div class="sheet-hd">
+      <h3 id="locTitle">מיקום הקופסה</h3>
+      <button class="x" id="locClose" aria-label="סגור">✕</button>
+    </div>
+    <p class="sunhint" style="margin:0 0 15px">
+      הזריחה והשקיעה מחושבות מקו הרוחב, קו האורך והתאריך. נוסחה בלבד — בלי טבלה ובלי אינטרנט.<br>
+      שינוי מיקום מזיז פעולות שמעוגנות לשמש. שעות קבועות לא מושפעות.
+    </p>
+    <div class="loclist" id="locList"></div>
+    <details class="more" style="margin-top:14px">
+      <summary>הזנה ידנית</summary>
+      <div class="manual">
+        <label>שם המקום <input id="nameIn" type="text" placeholder="צימר בצפון"></label>
+        <label>קו רוחב <input id="latIn" class="num" type="number" step="0.001" inputmode="decimal"></label>
+        <label>קו אורך <input id="lonIn" class="num" type="number" step="0.001" inputmode="decimal"></label>
+        <button class="save" id="locSave">שמור מיקום</button>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- name sheet -->
+<div class="scrim" id="nameScrim">
+  <div class="sheet" role="dialog" aria-modal="true" style="max-width:420px">
+    <div class="sheet-hd">
+      <h3>שם המזגן</h3>
+      <button class="x" id="nameClose" aria-label="סגור">✕</button>
+    </div>
+    <div class="manual">
+      <label>איך לקרוא למזגן הזה <input id="profIn" type="text" maxlength="40" placeholder="מזגן סלון"></label>
+      <button class="save" id="nameSave">שמור שם</button>
+    </div>
+    <div class="manual" style="border-top:1px solid var(--rule);margin-top:6px">
+      <div class="hint" id="learnInfo" style="margin:0 0 4px">—</div>
+      <button class="save" id="learnBtn">למד מהשלט של המזגן</button>
+      <div class="hint" id="learnStat" style="margin:4px 0 0"></div>
+    </div>
+  </div>
+</div>
+
+<!-- remote access sheet: shown only when the box reports it (REMOTE_ACCESS build) or when the page runs remotely -->
+<div class="scrim" id="netScrim">
+  <div class="sheet" role="dialog" aria-modal="true" style="max-width:440px">
+    <div class="sheet-hd">
+      <h3>שליטה מרחוק</h3>
+      <button class="x" id="netClose" aria-label="סגור">✕</button>
+    </div>
+    <div class="netsec" id="netBoxSec">
+      <p class="sunhint" style="margin:0">
+        הקופסה מתחברת לרשת הביתית ולברוקר, ומשאירה את הרשת <b>Mazgan</b> שלה כרגיל.
+        הסיסמאות נשמרות בקופסה ולא מוצגות כאן. הפעולה מהטלפון עוברת דרך אותו ברוקר.
+      </p>
+      <h4>הרשת הביתית</h4>
+      <div class="manual">
+        <label>שם הרשת (SSID) <input id="bxSsid" type="text" autocapitalize="off"></label>
+        <label>סיסמת הרשת <input id="bxPass" type="password" autocomplete="off"></label>
+      </div>
+      <h4>הברוקר (HiveMQ Cloud)</h4>
+      <div class="manual">
+        <label>כתובת <input id="bxHost" type="text" placeholder="xxxx.s1.eu.hivemq.cloud" autocapitalize="off" dir="ltr"></label>
+        <div class="row2">
+          <label>פורט <input id="bxPort" class="num" type="number" value="8883" dir="ltr"></label>
+          <label>משתמש <input id="bxUser" type="text" autocapitalize="off" dir="ltr"></label>
+        </div>
+        <label>סיסמה <input id="bxMpass" type="password" autocomplete="off"></label>
+        <button class="save" id="netBoxSave">שמור בקופסה והתחבר</button>
+        <button class="del" id="netBoxClear" style="color:var(--ink-2)">מחק את פרטי הרשת מהקופסה</button>
+        <div class="hint" id="netBoxStat" style="margin:0"></div>
+      </div>
+    </div>
+    <div class="netsec" id="netPhoneSec">
+      <p class="sunhint" style="margin:0">
+        הדף הזה רץ מרחוק ומדבר עם הקופסה דרך הברוקר. הפרטים נשמרים בטלפון הזה בלבד.
+        אותם משתמש וסיסמה שהוגדרו בקופסה, ושם הקופסה כפי שכתוב עליה.
+      </p>
+      <div class="manual" style="margin-top:12px">
+        <label>כתובת הברוקר <input id="rcHost" type="text" placeholder="xxxx.s1.eu.hivemq.cloud" autocapitalize="off" dir="ltr"></label>
+        <div class="row2">
+          <label>משתמש <input id="rcUser" type="text" autocapitalize="off" dir="ltr"></label>
+          <label>שם הקופסה <input id="rcBox" type="text" placeholder="Mazgan-1" autocapitalize="off" dir="ltr"></label>
+        </div>
+        <label>סיסמה <input id="rcPass" type="password" autocomplete="off"></label>
+        <button class="save" id="netPhoneSave">שמור והתחבר</button>
+        <div class="hint" id="netPhoneStat" style="margin:0"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- confirm sheet -->
+<div class="scrim" id="cfScrim">
+  <div class="sheet" role="dialog" aria-modal="true" style="max-width:440px">
+    <div class="sheet-hd"><h3 id="cfTitle">שים לב</h3></div>
+    <p id="cfBody" style="margin:0 0 4px;line-height:1.55"></p>
+    <div class="sheet-ft">
+      <button class="del" id="cfNo" style="color:var(--ink-2)">ביטול</button>
+      <button class="save" id="cfYes">הבנתי, שמור</button>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+/* =====================================================================
+   REMOTE — נבנה מהשלט של המזגן הספציפי, לא מרשימה קבועה.
+   בפרוטוקול מזוהה: מתמלא אוטומטית מיכולות השלט.
+   בהקלטה: temps הוא רשימת ההקלטות לפי הסדר, והשאר ריק.
+   הממשק מסתיר לבד כל פקד שלא נתמך.
+   ===================================================================== */
+/* ערכי דוגמה עד שהקופסה מדווחת על השלט שנלמד — אז הם מוחלפים במקום. */
+const CAPS = {
+  temps : [16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
+  modes : [ {v:'heat', label:'חום'}, {v:'cool', label:'קור'} ],
+  fan   : [ {v:'auto', label:'אוטומטי'}, {v:'low', label:'נמוך'},
+            {v:'mid',  label:'בינוני'},  {v:'high', label:'גבוה'} ],
+  turbo : true,
+  swing : true
+};
+
+const DAYNAMES = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
+
+let uid = 1;
+/* מזהה שלא יתנגש עם מזהים שנטענו מהקופסה: חותמת זמן + מונה */
+const nid = () => 'i' + Date.now().toString(36) + (uid++);
+
+/* ===== ברירת מחדל: אין כרטיסים כלל ===== */
+const state = { days: [] };
+
+/* ===== helpers ===== */
+const pad = n => String(n).padStart(2,'0');
+const mins = t => (+t.slice(0,2))*60 + (+t.slice(3));
+const parseD = s => { const [y,m,d] = s.split('-').map(Number); return new Date(y, m-1, d); };
+const fmtD = d => `${d.getDate()}.${d.getMonth()+1}`;
+
+/* =====================================================================
+   שמש — זריחה ושקיעה מחושבות מקו רוחב, קו אורך ותאריך (NOAA).
+   נוסחה טהורה: אין טבלה, אין הורדה, אין תלות באינטרנט.
+   בקושחה זה ייקבע כשדה בהגדרות ולא כמספר בקוד.
+   ===================================================================== */
+const PLACES = [
+  {n:'מודיעין עילית', lat:31.932, lon:35.042},
+  {n:'ביתר עילית',    lat:31.697, lon:35.121},
+  {n:'ירושלים',       lat:31.778, lon:35.222},
+  {n:'בית שמש',       lat:31.745, lon:34.988},
+  {n:'אלעד',          lat:32.052, lon:34.951},
+  {n:'בני ברק',       lat:32.084, lon:34.833},
+  {n:'פתח תקווה',     lat:32.087, lon:34.887},
+  {n:'תל אביב',       lat:32.080, lon:34.780},
+  {n:'נתניה',         lat:32.328, lon:34.856},
+  {n:'אשדוד',         lat:31.802, lon:34.650},
+  {n:'רחובות',        lat:31.894, lon:34.809},
+  {n:'חיפה',          lat:32.794, lon:34.990},
+  {n:'באר שבע',       lat:31.252, lon:34.791},
+  {n:'טבריה',         lat:32.792, lon:35.531},
+  {n:'צפת',           lat:32.965, lon:35.497}
+];
+let SUN = { label:PLACES[0].n, lat:PLACES[0].lat, lon:PLACES[0].lon };
+
+function sunTimes(d){
+  const R  = Math.PI/180;
+  const jd = Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())/864e5) + 2440588;
+  const n  = Math.round(jd - 2451545 + 0.0008);
+  const Js = n - SUN.lon/360;
+  const M  = (357.5291 + 0.98560028*Js) % 360;
+  const C  = 1.9148*Math.sin(M*R) + 0.0200*Math.sin(2*M*R) + 0.0003*Math.sin(3*M*R);
+  const L  = (M + C + 180 + 102.9372) % 360;
+  const Jt = 2451545 + Js + 0.0053*Math.sin(M*R) - 0.0069*Math.sin(2*L*R);
+  const dec= Math.asin(Math.sin(L*R) * Math.sin(23.4397*R));
+  const co = (Math.sin(-0.833*R) - Math.sin(SUN.lat*R)*Math.sin(dec)) /
+             (Math.cos(SUN.lat*R)*Math.cos(dec));
+  if (co > 1 || co < -1) return null;
+  const w   = Math.acos(co)/R;
+  const loc = j => { const t = new Date((j - 2440587.5)*864e5);
+                     return t.getHours()*60 + t.getMinutes(); };
+  return { rise: loc(Jt - w/360), set: loc(Jt + w/360) };
+}
+
+/* התאריך שלפיו נפתרת שעה מעוגנת: יום חד־פעמי = התאריך שלו,
+   יום מחזורי = המופע הקרוב. */
+function resolveDate(day){
+  const d = parseD(day.date);
+  if (!day.recurring) return d;
+  const today = new Date(); today.setHours(0,0,0,0);
+  while (d < today) d.setDate(d.getDate() + 7);
+  return d;
+}
+function sunAt(anchor, date){
+  const s = sunTimes(date);
+  return s ? (anchor === 'rise' ? s.rise : s.set) : 0;
+}
+/* דקות מתחילת היום. פעולה מעוגנת = שמש + הפרש שנלכד בשמירה. */
+function minAt(day, e, date){
+  return e.anchor ? Math.round(sunAt(e.anchor, date) + e.delta) : mins(e.t);
+}
+function evMin(day, e){ return minAt(day, e, resolveDate(day)); }
+function fmtMin(m){ const x = ((m % 1440) + 1440) % 1440; return pad(Math.floor(x/60)) + ':' + pad(x % 60); }
+function evT(day, e){ return fmtMin(evMin(day, e)); }
+
+const sortEv = day => day.events.sort((a,b) => evMin(day,a) - evMin(day,b));
+
+/* התאריכים שעליהם בודקים התנגשויות: שנה קדימה ביום מחזורי, תאריך אחד בחד־פעמי */
+function weeksOf(day, n){
+  const d0 = resolveDate(day);
+  if (!day.recurring) return [d0];
+  const out = [];
+  for (let i = 0; i < n; i++){ const d = new Date(d0); d.setDate(d.getDate() + 7*i); out.push(d); }
+  return out;
+}
+
+/* אזהרות. מוצגות ולא מתקנות לבד — הוא פותח כל שישי ורואה. */
+function dayWarnings(day){
+  const evs = day.events;
+  if (!evs.length || !evs.some(e => e.anchor)) return [];
+  const order = evs.map(e => e.id).join();
+  let cross = false, collide = false, swap = false;
+  weeksOf(day, 52).forEach(d => {
+    const list = evs.map(e => ({ id:e.id, m:minAt(day, e, d) }));
+    if (list.some(x => x.m < 0 || x.m >= 1440)) cross = true;
+    const sd = list.slice().sort((a,b) => a.m - b.m);
+    for (let i = 1; i < sd.length; i++) if (sd[i].m === sd[i-1].m) collide = true;
+    if (sd.map(x => x.id).join() !== order) swap = true;
+  });
+  const out = [];
+  if (swap)    out.push('סדר הפעולות מתחלף במהלך השנה — פעולה שזזה עם השמש עוקפת פעולה אחרת.');
+  if (collide) out.push('בחלק מהשבועות שתי פעולות נופלות בדיוק באותה דקה.');
+  if (cross)   out.push('בחלק מהשנה פעולה שזזה עם השמש יוצאת מגבולות היום הזה (לפני 00:00 או אחרי 23:59).');
+  return out;
+}
+
+function dayLabel(day){
+  const d = parseD(day.date);
+  return day.recurring
+    ? `כל יום ${DAYNAMES[d.getDay()]}`
+    : `יום ${DAYNAMES[d.getDay()]} ${fmtD(d)}`;
+}
+function evText(e){
+  if (e.kind === 'off') return { lead:'כיבוי', rest:'' };
+  return { lead:'הפעלה', rest:`${e.mode==='heat'?'חום':'קור'} · ${e.temp}°` };
+}
+function stateClass(s){ return !s ? 'off' : s.mode; }
+function stateColor(s){
+  if (!s) return 'var(--off)';
+  return s.mode === 'heat' ? 'var(--heat)' : 'var(--cool)';
+}
+
+/* entry state of each day = end state of the previous day */
+function computeEntries(){
+  let carry = null;
+  return state.days.map(day => {
+    const entry = carry;
+    sortEv(day);
+    day.events.forEach(e => { carry = e.kind === 'off' ? null : {mode:e.mode, temp:e.temp}; });
+    return entry;
+  });
+}
+
+/* ===== render ===== */
+function render(){
+  const entries = computeEntries();
+  const host = document.getElementById('days');
+  host.innerHTML = '';
+
+  if (!state.days.length){
+    host.innerHTML =
+      `<div class="blank-state">
+         <h2>אין עדיין לוח זמנים</h2>
+         <p>הוסף יום, ובתוכו את השעות שבהן המזגן צריך לפעול.<br>
+            סמן «לחזור כל שבוע» כדי שהיום יחזור מעצמו.</p>
+       </div>`;
+    updateHeader();
+    return;
+  }
+
+  state.days.forEach((day, di) => {
+    const card = document.createElement('section');
+    card.className = 'day';
+    const entry = entries[di];
+    const d = parseD(day.date);
+
+    /* header */
+    const hd = document.createElement('div');
+    hd.className = 'day-hd';
+    hd.innerHTML =
+      `<div class="day-title"><h2>${dayLabel(day)}</h2>` +
+      (day.recurring ? '<span class="pill rec">חוזר כל שבוע</span>' : '<span class="pill">חד־פעמי</span>') +
+      `</div>
+       <button class="daydel" aria-label="מחק יום">✕ מחק</button>
+       <div class="entry">
+         <span class="dotmini" style="background:${stateColor(entry)}"></span>
+         <span>המזגן נכנס ליום ${entry ? `<b>דלוק</b> — ${entry.mode==='heat'?'חום':'קור'} ${entry.temp}°` : '<b>כבוי</b>'}</span>
+       </div>`;
+    hd.querySelector('.daydel').addEventListener('click', () => deleteDay(day));
+
+    /* אזהרות עיגון שמש */
+    const warns = dayWarnings(day);
+    if (warns.length){
+      const w = document.createElement('div');
+      w.className = 'warnbar';
+      w.innerHTML = warns.map(t => `<div>${t}</div>`).join('');
+      hd.appendChild(w);
+    }
+
+    /* כוונון מהיר ליום — הסיבה היחידה שמחזוריות עובדת בפועל:
+       השלד קבוע, והתאמת מזג האוויר היא שתי לחיצות ולא פתיחת כל פעולה. */
+    const ons = day.events.filter(e => e.kind === 'on');
+    if (ons.length){
+      const temps = [...new Set(ons.map(e => e.temp))].sort((a,b) => a-b);
+      const lbl = temps.length === 1 ? temps[0] + '°'
+                                     : temps[0] + '°–' + temps[temps.length-1] + '°';
+      const lo = CAPS.temps.indexOf(temps[0]);
+      const hi = CAPS.temps.indexOf(temps[temps.length-1]);
+      const adj = document.createElement('div');
+      adj.className = 'dayadj';
+      adj.innerHTML =
+        `<span class="lb">כוונון מהיר ליום</span>
+         <button class="stepbtn" data-d="-1" aria-label="מעלה אחת פחות" ${lo <= 0 ? 'disabled' : ''}>−</button>
+         <span class="tv num">${lbl}</span>
+         <button class="stepbtn" data-d="1" aria-label="מעלה אחת יותר" ${hi >= CAPS.temps.length-1 ? 'disabled' : ''}>+</button>` +
+        (CAPS.modes.length > 1
+          ? '<span class="sep"></span>' +
+            CAPS.modes.map(m => `<button class="modebtn" data-m="${m.v}">הכל ל${m.label}</button>`).join('')
+          : '');
+      adj.querySelectorAll('.stepbtn').forEach(b =>
+        b.addEventListener('click', () => adjustDayTemp(day, +b.dataset.d)));
+      adj.querySelectorAll('.modebtn').forEach(b =>
+        b.addEventListener('click', () => setDayMode(day, b.dataset.m)));
+      hd.appendChild(adj);
+    }
+
+    card.appendChild(hd);
+
+    /* timeline */
+    const tl = document.createElement('div');
+    tl.className = 'tl';
+    if (!day.events.length){
+      tl.innerHTML = '<div class="empty">אין פעולות ביום הזה. הוסף פעולה כדי להתחיל.</div>';
+    } else {
+      let cur = entry;
+      day.events.forEach((e, i) => {
+        const before = cur;
+        cur = e.kind === 'off' ? null : {mode:e.mode, temp:e.temp};
+        const txt = evText(e);
+        const row = document.createElement('div');
+        row.className = 'ev';
+        row.innerHTML =
+          `<div class="ev-time num">${evT(day, e)}</div>
+           <div class="rail">
+             ${i > 0 ? `<div class="seg before" style="background:${stateColor(before)}"></div>` : ''}
+             ${i < day.events.length-1 ? `<div class="seg after" style="background:${stateColor(cur)}"></div>` : ''}
+             <div class="node ${e.kind==='on'?'on':''}" style="border-color:${stateColor(cur||before)};${e.kind==='on'?`background:${stateColor(cur)}`:''}"></div>
+           </div>
+           <div class="ev-body">
+             <button class="chip ${e.kind==='off'?'off':e.mode}">
+               <span class="lead">${txt.lead}</span>
+               <span class="rest">${txt.rest}</span>
+               ${e.anchor ? `<span class="suntag">זזה עם ${e.anchor==='rise'?'הזריחה':'השקיעה'}</span>` : ''}
+             </button>
+           </div>`;
+        row.querySelector('.chip').addEventListener('click', () => openEvent(day, e));
+        tl.appendChild(row);
+      });
+    }
+    card.appendChild(tl);
+
+    /* footer */
+    const ft = document.createElement('div');
+    ft.className = 'day-ft';
+    const endsOn = day.events.length && day.events[day.events.length-1].kind === 'on';
+    if (endsOn){
+      const c = document.createElement('div');
+      c.className = 'carry';
+      c.innerHTML = `<span>🔥</span><span><b>המזגן יישאר דלוק</b> אחרי חצות. אם צריך לכבות אותו בלילה, הכיבוי נכנס ליום שאחרי. </span>`;
+      const b = document.createElement('button');
+      b.textContent = 'הוסף כיבוי ליום הבא';
+      b.addEventListener('click', () => addOffNextDay(di));
+      c.lastElementChild.appendChild(b);
+      ft.appendChild(c);
+    }
+    const row = document.createElement('div');
+    row.className = 'ft-row';
+
+    const add = document.createElement('button');
+    add.className = 'addbtn';
+    add.textContent = '+ הוסף פעולה';
+    add.addEventListener('click', () => openEvent(day, null));
+    row.appendChild(add);
+
+    row.appendChild(Object.assign(document.createElement('div'), {className:'spacer'}));
+
+    const lab = document.createElement('label');
+    lab.className = 'chk';
+    const cb = document.createElement('input');
+    cb.type = 'checkbox'; cb.checked = day.recurring;
+    lab.appendChild(cb);
+    lab.appendChild(document.createTextNode(`לחזור כל יום ${DAYNAMES[d.getDay()]}`));
+    row.appendChild(lab);
+
+    const sv = document.createElement('button');
+    sv.className = 'save';
+    sv.textContent = 'שמור';
+    sv.addEventListener('click', () => saveDay(day, cb.checked, sv));
+    row.appendChild(sv);
+
+    ft.appendChild(row);
+    card.appendChild(ft);
+    host.appendChild(card);
+  });
+
+  updateHeader();
+}
+
+/* כל שינוי בלוח מצייר מחדש ונדחף לקופסה. הקופסה תמיד משקפת את המסך —
+   אין מצב שבו מה שרואים לא נשמר. */
+function commit(){ render(); pushSchedule(); }
+
+/* ===== save + recurrence rules ===== */
+function saveDay(day, wantRec, btn){
+  const wd = parseD(day.date).getDay();
+  const clash = state.days.find(o => o !== day && o.recurring && parseD(o.date).getDay() === wd);
+
+  if (!wantRec && clash){
+    confirmBox(
+      `מחיקת המחזוריות של יום ${DAYNAMES[wd]}`,
+      `שמירה בלי סימון תמחק את המחזוריות הקבועה של יום ${DAYNAMES[wd]}. מאותו תאריך והלאה לא יקרה כלום ביום הזה עד שתגדיר מחזוריות מחדש. אפשר להחזיר את הלוח האחרון בלחיצה.`,
+      () => { state.days = state.days.filter(o => o !== clash); day.recurring = false; flash(btn); commit(); }
+    );
+    return;
+  }
+  day.recurring = wantRec;
+  flash(btn); commit();
+}
+function deleteDay(day){
+  const wd = parseD(day.date).getDay();
+  const n = day.events.length;
+  const body = day.recurring
+    ? `היום הזה חוזר כל יום ${DAYNAMES[wd]}. מחיקה תסיר אותו לגמרי, ומיום ${DAYNAMES[wd]} הבא לא יקרה כלום עד שתגדיר מחדש.`
+    : (n ? `ביום הזה יש ${n} פעולות. מחיקה תסיר את כולן.`
+         : 'היום הזה ריק. למחוק אותו?');
+  confirmBox(`מחיקת ${dayLabel(day)}`, body, () => {
+    state.days = state.days.filter(o => o !== day);
+    commit();
+  });
+  document.getElementById('cfYes').textContent = 'מחק';
+}
+
+/* ===== כוונון ברמת היום ===== */
+function adjustDayTemp(day, dir){
+  const ons = day.events.filter(e => e.kind === 'on');
+  if (!ons.length) return;
+  const idx = ons.map(e => CAPS.temps.indexOf(e.temp));
+  if (dir < 0 && Math.min(...idx) <= 0) return;
+  if (dir > 0 && Math.max(...idx) >= CAPS.temps.length - 1) return;
+  ons.forEach(e => { e.temp = CAPS.temps[CAPS.temps.indexOf(e.temp) + dir]; });
+  commit();
+}
+function setDayMode(day, m){
+  day.events.forEach(e => { if (e.kind === 'on') e.mode = m; });
+  commit();
+}
+
+function flash(btn){
+  btn.classList.add('done'); btn.textContent = 'נשמר ✓';
+  setTimeout(() => { btn.classList.remove('done'); btn.textContent = 'שמור'; }, 1400);
+}
+
+function addOffNextDay(di){
+  const src = state.days[di];
+  const nx = new Date(parseD(src.date).getTime() + 864e5);
+  const wd = nx.getDay();
+
+  /* היעד חייב להיות מאותו סוג כמו יום המקור:
+     יום מחזורי → מחזוריות של היום שאחריו. יום חד־פעמי → תאריך ספציפי. */
+  const target = src.recurring
+    ? state.days.find(o => o.recurring && parseD(o.date).getDay() === wd)
+    : state.days.find(o => !o.recurring && o.date === key(nx));
+
+  if (target){ openEvent(target, null, {t:'00:30', kind:'off', anchor:null, delta:null}); return; }
+
+  const other = src.recurring
+    ? null
+    : state.days.find(o => o.recurring && parseD(o.date).getDay() === wd);
+
+  const make = () => {
+    const day = { id:nid(), date:key(nx), recurring:src.recurring, saved:false, events:[] };
+    state.days.push(day);
+    state.days.sort((a,b) => parseD(a.date) - parseD(b.date));
+    commit();
+    openEvent(day, null, {t:'00:30', kind:'off', anchor:null, delta:null});
+  };
+
+  if (other){
+    confirmBox(
+      `ליום ${DAYNAMES[wd]} כבר יש מחזוריות`,
+      `היום שאתה מוסיף לו כיבוי הוא חד־פעמי, ולכן ייווצר יום ${DAYNAMES[wd]} חד־פעמי בתאריך הזה. שמירה שלו תמחק את המחזוריות הקבועה של יום ${DAYNAMES[wd]}. אם רצית שהכיבוי יקרה כל שבוע, סמן קודם «לחזור כל שבוע» ביום המקור.`,
+      make
+    );
+    document.getElementById('cfYes').textContent = 'המשך';
+    return;
+  }
+  make();
+}
+
+/* ===== event sheet ===== */
+let cur = { day:null, ev:null, draft:null, timeTouched:false };
+
+function openEvent(day, ev, preset){
+  cur.day = day;
+  cur.ev = ev;
+  /* פעולה חדשה נפתחת על מה שעומד בשלט עכשיו, ולא על ברירת מחדל שרירותית.
+     מה שרואים על השולחן הוא מה שייכנס לכרטיס. */
+  cur.draft = ev
+    ? Object.assign({}, ev)
+    : Object.assign({
+        id:nid(), t:'15:00', kind:'on',
+        anchor:null, delta:null,
+        mode:REMOTE.mode,
+        temp:REMOTE.temp,
+        fan:REMOTE.fan,
+        turbo:REMOTE.turbo, swing:REMOTE.swing
+      }, preset || {});
+  /* פעולה מעוגנת נפתחת על השעה שיוצאת בפועל, לא על נוסחה.
+     פתיחה ושמירה בלי לגעת בשעה לא מחדשות את ההפרש. */
+  if (cur.draft.anchor) cur.draft.t = evT(day, ev);
+  cur.timeTouched = false;
+  document.getElementById('evTitle').textContent = ev ? 'עריכת פעולה' : 'פעולה חדשה';
+  document.getElementById('evSub').innerHTML =
+    dayLabel(day) + (day.recurring ? ' · <span class="rec">חוזר כל שבוע</span>' : ' · חד־פעמי');
+  document.getElementById('evDel').style.display = ev ? '' : 'none';
+  syncSheet();
+  open('evScrim');
+}
+/* ===== build the remote controls from CAPS ===== */
+function fillSeg(id, opts){
+  const host = document.getElementById(id);
+  host.innerHTML = '';
+  opts.forEach(o => {
+    const b = document.createElement('button');
+    b.dataset.v = o.v;
+    b.textContent = o.label;
+    host.appendChild(b);
+  });
+}
+function buildRemote(){
+  buildPanel();
+  fillSeg('segMode', CAPS.modes);
+  fillSeg('segFan', CAPS.fan);
+  fillSeg('segTurbo', [{v:'off',label:'כבוי'},{v:'on',label:'דלוק'}]);
+  fillSeg('segSwing', [{v:'off',label:'כבוי'},{v:'on',label:'דלוק'}]);
+
+  document.getElementById('fieldMode').style.display  = CAPS.modes.length > 1 ? '' : 'none';
+  document.getElementById('fieldFan').style.display   = CAPS.fan.length ? '' : 'none';
+  document.getElementById('fieldTurbo').style.display = CAPS.turbo ? '' : 'none';
+  document.getElementById('fieldSwing').style.display = CAPS.swing ? '' : 'none';
+  document.getElementById('moreBox').style.display =
+    (CAPS.fan.length || CAPS.turbo || CAPS.swing) ? '' : 'none';
+
+  const r = document.getElementById('tempRange');
+  r.max = CAPS.temps.length - 1;
+  const t = CAPS.temps;
+  document.getElementById('tempTicks').innerHTML =
+    `<span>${t[0]}°</span><span>${t[Math.floor((t.length-1)/2)]}°</span><span>${t[t.length-1]}°</span>`;
+  document.getElementById('fieldTemp').style.display = t.length > 1 ? '' : 'none';
+
+  if (!buildRemote.kindBound){ bindSeg('segKind','kind'); buildRemote.kindBound = true; }
+  bindSeg('segMode','mode');
+  bindSeg('segFan','fan'); bindSeg('segTurbo','turbo'); bindSeg('segSwing','swing');
+}
+
+/* =====================================================================
+   השלט הקבוע — יושב בראש הדף, נבנה מאותו CAPS כמו חלון הפעולה,
+   ומשמש גם כברירת המחדל של כל פעולה חדשה.
+   שידור בהשהיה: גרירת סליידר היא שידור אחד בסוף ולא שנים־עשר.
+   ===================================================================== */
+const REMOTE = {
+  on:false,
+  mode:CAPS.modes[0].v,
+  temp:CAPS.temps[Math.floor((CAPS.temps.length-1)/2)],
+  fan:CAPS.fan.length ? CAPS.fan[0].v : null,
+  turbo:'off', swing:'off'
+};
+const SEND_DELAY = 1200;
+let sendTimer = null, lastSent = null;
+/* בזמן ש-המשתמש נוגע בשלט או ששידור באוויר, סבב סטטוס לא ידרוס את REMOTE.
+   בלי זה פולינג שיצא כשהקופסה עוד החזיקה את המצב הישן חוזר אחרי הלחיצה
+   ומחזיר את המתג אחורה — והלחיצה הבאה מחשבת ההפך שוב. */
+let remoteBusy = false;
+
+function buildPanel(){
+  fillSeg('rSegMode', CAPS.modes);
+  fillSeg('rSegFan', CAPS.fan);
+  fillSeg('rSegTurbo', [{v:'off',label:'כבוי'},{v:'on',label:'דלוק'}]);
+  fillSeg('rSegSwing', [{v:'off',label:'כבוי'},{v:'on',label:'דלוק'}]);
+
+  document.getElementById('rmRowMode').style.display  = CAPS.modes.length > 1 ? '' : 'none';
+  document.getElementById('rmRowTemp').style.display  = CAPS.temps.length > 1 ? '' : 'none';
+  document.getElementById('rmRowFan').style.display   = CAPS.fan.length ? '' : 'none';
+  document.getElementById('rmRowTurbo').style.display = CAPS.turbo ? '' : 'none';
+  document.getElementById('rmRowSwing').style.display = CAPS.swing ? '' : 'none';
+
+  const r = document.getElementById('rTempRange');
+  r.max = CAPS.temps.length - 1;
+
+  bindPanelSeg('rSegMode','mode');
+  bindPanelSeg('rSegFan','fan');
+  bindPanelSeg('rSegTurbo','turbo');
+  bindPanelSeg('rSegSwing','swing');
+
+  /* הכפתור והסליידר הם רכיבים קבועים בדף, לא נבנים מחדש כמו כפתורי הבחירה.
+     buildPanel רץ שוב כשהקופסה מדווחת על יכולות השלט, ולכן מחברים אותם
+     פעם אחת בלבד — אחרת כל לחיצה מריצה את הפעולה פעמיים (הדלק ומיד כבה). */
+  if (!buildPanel.bound){
+    buildPanel.bound = true;
+    r.addEventListener('input', e => {
+      REMOTE.temp = CAPS.temps[+e.target.value];
+      document.getElementById('rTempVal').textContent = REMOTE.temp;
+      queueSend();
+    });
+    document.getElementById('rmPwr').addEventListener('click', () => {
+      REMOTE.on = !REMOTE.on;
+      drawPanel(); sendNow();
+    });
+  }
+}
+function bindPanelSeg(id, key){
+  document.querySelectorAll('#'+id+' button').forEach(b =>
+    b.addEventListener('click', () => { REMOTE[key] = b.dataset.v; drawPanel(); sendNow(); }));
+}
+
+function drawPanel(){
+  const on = REMOTE.on;
+  document.getElementById('rmPwr').setAttribute('aria-pressed', String(on));
+  document.getElementById('rmPwrTxt').textContent = on ? 'כבה' : 'הדלק';
+  document.getElementById('rmBody').classList.toggle('dim', !on);
+  document.getElementById('rmState').innerHTML = on
+    ? `<b>${CAPS.modes.length>1 ? (REMOTE.mode==='heat'?'חום':'קור')+' · ' : ''}${REMOTE.temp}°</b>`
+    : '<b>כבוי</b>';
+  setSeg('rSegMode', REMOTE.mode);
+  setSeg('rSegFan', REMOTE.fan);
+  setSeg('rSegTurbo', REMOTE.turbo);
+  setSeg('rSegSwing', REMOTE.swing);
+  const i = Math.max(0, CAPS.temps.indexOf(REMOTE.temp));
+  document.getElementById('rTempRange').value = i;
+  document.getElementById('rTempVal').textContent = CAPS.temps[i];
+}
+
+function sendState(cls, txt){
+  const el = document.getElementById('rmSend');
+  el.className = 'st' + (cls ? ' ' + cls : '');
+  el.textContent = txt;
+}
+/* ההשהיה קיימת רק בסליידר המעלות, כי שם נוצרים ערכי ביניים שאיש לא ביקש.
+   כפתור הוא לחיצה אחת עם כוונה אחת, ולכן משדר מיד. */
+function queueSend(){
+  remoteBusy = true;
+  clearTimeout(sendTimer);
+  sendState('pend', 'משדר עוד רגע…');
+  sendTimer = setTimeout(doSend, SEND_DELAY);
+}
+/* לחיצה על כפתור מבטלת המתנה של סליידר ומשדרת את הכל יחד. */
+function sendNow(){
+  remoteBusy = true;
+  clearTimeout(sendTimer);
+  sendTimer = null;
+  sendState('pend', 'משדר…');
+  doSend();
+}
+async function doSend(){
+  sendTimer = null;
+  if (!BOX.online){ remoteBusy = false; sendState('fail', 'אין קשר לקופסה — לא שודר'); return; }
+  try{
+    const r = await api('/api/remote', Object.assign({}, REMOTE));
+    if (r.sent) sendState('', 'שודר');
+    else sendState('fail', r.reason === 'not-learned'
+      ? 'לא שודר — השלט טרם נלמד. לחץ על שם המזגן כדי ללמד אותו.'
+      : 'השידור נכשל');
+  } catch(e){ sendState('fail', 'השידור נכשל'); }
+  finally{ remoteBusy = false; }        /* רק עכשיו הקופסה שוב מקור האמת */
+}
+
+/* ===== עיגון לשמש ===== */
+function anchorDate(){ return resolveDate(cur.day); }
+
+/* ברירת המחדל מוצעת לפי קרבה, אבל נשארת בחירה גלויה של המשתמש */
+function defaultAnchor(t){
+  const s = sunTimes(anchorDate());
+  if (!s) return 'set';
+  const m = mins(t);
+  return Math.abs(m - s.rise) <= Math.abs(m - s.set) ? 'rise' : 'set';
+}
+function draftDelta(){
+  const d = cur.draft;
+  return (cur.timeTouched || d.delta == null)
+    ? mins(d.t) - sunAt(d.anchor, anchorDate())
+    : d.delta;
+}
+function anchorHintText(){
+  const d = cur.draft;
+  if (!d.anchor) return '';
+  const delta = draftDelta();
+  const word  = d.anchor === 'rise' ? 'הזריחה' : 'השקיעה';
+  const abs   = Math.abs(Math.round(delta));
+  const rel   = abs === 0 ? `בדיוק ב${word}`
+              : delta > 0 ? `${abs} דקות אחרי ${word}`
+                          : `${abs} דקות לפני ${word}`;
+  let out = `<b>${rel}.</b> במופע הקרוב יוצא ${fmtMin(sunAt(d.anchor, anchorDate()) + delta)}.`;
+  if (cur.day.recurring){
+    let lo = Infinity, hi = -Infinity;
+    weeksOf(cur.day, 52).forEach(dt => {
+      const m = Math.round(sunAt(d.anchor, dt) + delta);
+      lo = Math.min(lo, m); hi = Math.max(hi, m);
+    });
+    out += `<br>לאורך השנה זה נע בין ${fmtMin(lo)} ל-${fmtMin(hi)}.`;
+  }
+  return out;
+}
+
+function syncSheet(){
+  const d = cur.draft;
+  document.getElementById('evTime').textContent = d.t;
+  document.getElementById('anchorOn').checked = !!d.anchor;
+  document.getElementById('anchorBody').style.display = d.anchor ? '' : 'none';
+  setSeg('segAnchor', d.anchor || '');
+  document.getElementById('anchorHint').innerHTML = anchorHintText();
+  setSeg('segKind', d.kind);
+  setSeg('segMode', d.mode);
+  setSeg('segFan', d.fan);
+  setSeg('segTurbo', d.turbo);
+  setSeg('segSwing', d.swing);
+  const i = Math.max(0, CAPS.temps.indexOf(d.temp));
+  document.getElementById('tempRange').value = i;
+  document.getElementById('tempVal').textContent = CAPS.temps[i];
+  document.getElementById('onFields').style.display = d.kind === 'off' ? 'none' : '';
+}
+function setSeg(id, v){
+  document.querySelectorAll('#'+id+' button').forEach(b =>
+    b.setAttribute('aria-pressed', String(b.dataset.v === v)));
+}
+function bindSeg(id, key){
+  document.querySelectorAll('#'+id+' button').forEach(b =>
+    b.addEventListener('click', () => { cur.draft[key] = b.dataset.v; syncSheet(); }));
+}
+buildRemote();
+
+document.getElementById('anchorOn').addEventListener('change', e => {
+  if (e.target.checked){ cur.draft.anchor = defaultAnchor(cur.draft.t); cur.timeTouched = true; }
+  else { cur.draft.anchor = null; cur.draft.delta = null; }
+  syncSheet();
+});
+document.querySelectorAll('#segAnchor button').forEach(b =>
+  b.addEventListener('click', () => {
+    cur.draft.anchor = b.dataset.v;
+    cur.timeTouched = true;      /* החלפת עוגן לוכדת מחדש מהשעה שעל המסך */
+    syncSheet();
+  }));
+
+document.getElementById('tempRange').addEventListener('input', e => {
+  cur.draft.temp = CAPS.temps[+e.target.value];
+  document.getElementById('tempVal').textContent = cur.draft.temp;
+});
+document.getElementById('evSave').addEventListener('click', () => {
+  const d = cur.draft;
+  if (d.anchor) d.delta = draftDelta(); else d.delta = null;
+  if (d.kind === 'off'){ ['mode','temp','fan','turbo','swing'].forEach(k => delete d[k]); }
+  if (cur.ev){ Object.assign(cur.ev, d); Object.keys(cur.ev).forEach(k => { if (!(k in d)) delete cur.ev[k]; }); }
+  else { cur.day.events.push(d); }
+  close('evScrim'); commit();
+});
+document.getElementById('evDel').addEventListener('click', () => {
+  cur.day.events = cur.day.events.filter(e => e !== cur.ev);
+  close('evScrim'); commit();
+});
+document.getElementById('evClose').addEventListener('click', () => close('evScrim'));
+
+/* ===== clock picker ===== */
+let clk = { h:15, m:0, phase:'h' };
+
+document.getElementById('evTime').addEventListener('click', () => {
+  clk.h = +cur.draft.t.slice(0,2);
+  clk.m = +cur.draft.t.slice(3);
+  clk.phase = 'h';
+  drawClock();
+  open('clkScrim');
+});
+function drawClock(){
+  const face = document.getElementById('face');
+  face.querySelectorAll('.n').forEach(n => n.remove());
+  const R = 144;
+
+  const put = (label, val, ang, inner) => {
+    const el = document.createElement('button');
+    el.className = 'n num' + (inner ? ' inner' : '');
+    el.textContent = label;
+    const r = inner ? R - 76 : R - 26;
+    const rad = (ang - 90) * Math.PI / 180;
+    el.style.left = (R + r * Math.cos(rad)) + 'px';
+    el.style.top  = (R + r * Math.sin(rad)) + 'px';
+    const sel = clk.phase === 'h' ? clk.h === val : clk.m === val;
+    if (sel) el.classList.add('sel');
+    el.addEventListener('click', () => {
+      if (clk.phase === 'h'){ clk.h = val; clk.phase = 'm'; }
+      else { clk.m = val; }
+      drawClock();
+    });
+    face.appendChild(el);
+  };
+
+  if (clk.phase === 'h'){
+    for (let i = 1; i <= 12; i++) put(pad(i), i, i*30, false);
+    for (let i = 13; i <= 24; i++) put(pad(i%24), i%24, (i-12)*30, true);
+  } else {
+    for (let i = 0; i < 12; i++) put(pad(i*5), i*5, i*30, false);
+  }
+
+  const hand = document.getElementById('hand');
+  let ang, len;
+  if (clk.phase === 'h'){
+    const outer = clk.h >= 1 && clk.h <= 12;
+    ang = (clk.h % 12) * 30;
+    len = outer ? R - 46 : R - 93;
+  } else {
+    ang = (clk.m / 5) * 30;
+    len = R - 46;
+  }
+  hand.style.height = len + 'px';
+  hand.style.transform = `translateX(-50%) rotate(${ang}deg)`;
+
+  document.getElementById('clkH').textContent = pad(clk.h);
+  document.getElementById('clkM').textContent = pad(clk.m);
+  document.getElementById('clkH').className = clk.phase === 'h' ? 'act' : '';
+  document.getElementById('clkM').className = clk.phase === 'm' ? 'act' : '';
+  document.getElementById('clkHint').textContent = clk.phase === 'h' ? 'בחר שעה' : 'בחר דקות';
+}
+document.getElementById('clkH').addEventListener('click', () => { clk.phase='h'; drawClock(); });
+document.getElementById('clkM').addEventListener('click', () => { clk.phase='m'; drawClock(); });
+document.getElementById('clkOk').addEventListener('click', () => {
+  if (cur.draft.t !== pad(clk.h) + ':' + pad(clk.m)) cur.timeTouched = true;
+  cur.draft.t = pad(clk.h) + ':' + pad(clk.m);
+  close('clkScrim'); syncSheet();
+});
+document.getElementById('clkCancel').addEventListener('click', () => close('clkScrim'));
+
+/* ===== add day ===== */
+const MONTHS = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+let calCursor = null;
+
+const key = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const midnight = d => { const x = new Date(d); x.setHours(0,0,0,0); return x; };
+
+document.getElementById('addDay').addEventListener('click', () => {
+  const now = midnight(new Date());
+  calCursor = new Date(now.getFullYear(), now.getMonth(), 1);
+  const tom = new Date(now.getTime() + 864e5);
+  document.getElementById('qToday').disabled    = !!state.days.find(o => o.date === key(now));
+  document.getElementById('qTomorrow').disabled = !!state.days.find(o => o.date === key(tom));
+  drawCal();
+  open('dayScrim');
+});
+document.getElementById('qToday').addEventListener('click', () => createDay(midnight(new Date())));
+document.getElementById('qTomorrow').addEventListener('click', () => createDay(new Date(midnight(new Date()).getTime() + 864e5)));
+document.getElementById('dayClose').addEventListener('click', () => close('dayScrim'));
+document.getElementById('calPrev').addEventListener('click', () => { calCursor.setMonth(calCursor.getMonth()-1); drawCal(); });
+document.getElementById('calNext').addEventListener('click', () => { calCursor.setMonth(calCursor.getMonth()+1); drawCal(); });
+
+function drawCal(){
+  const cal = document.getElementById('cal');
+  const today = midnight(new Date());
+  document.getElementById('calName').textContent = `${MONTHS[calCursor.getMonth()]} ${calCursor.getFullYear()}`;
+  cal.innerHTML = '';
+  ['א','ב','ג','ד','ה','ו','ש'].forEach(w => {
+    const el = document.createElement('div');
+    el.className = 'wd'; el.textContent = w;
+    cal.appendChild(el);
+  });
+  const first = new Date(calCursor.getFullYear(), calCursor.getMonth(), 1);
+  const len = new Date(calCursor.getFullYear(), calCursor.getMonth()+1, 0).getDate();
+  for (let i = 0; i < first.getDay(); i++){
+    const b = document.createElement('button');
+    b.className = 'blank'; b.disabled = true;
+    cal.appendChild(b);
+  }
+  for (let n = 1; n <= len; n++){
+    const d = new Date(calCursor.getFullYear(), calCursor.getMonth(), n);
+    const b = document.createElement('button');
+    b.className = 'num';
+    b.textContent = n;
+    if (d < today) b.disabled = true;
+    else if (state.days.find(o => o.date === key(d))){ b.classList.add('taken'); b.disabled = true; b.title = 'כבר קיים יום כזה'; }
+    if (+d === +today) b.classList.add('today');
+    b.addEventListener('click', () => createDay(d));
+    cal.appendChild(b);
+  }
+}
+function createDay(d){
+  close('dayScrim');
+  state.days.push({ id:nid(), date:key(d), recurring:false, saved:false, events:[] });
+  state.days.sort((a,b) => parseD(a.date) - parseD(b.date));
+  commit();
+  const idx = state.days.findIndex(o => o.date === key(d));
+  const card = document.getElementById('days').children[idx];
+  if (card) card.scrollIntoView({ behavior:'smooth', block:'center' });
+}
+
+/* ===== בורר מיקום ===== */
+function sunLine(place){
+  const keep = SUN;
+  SUN = { label:place.n, lat:place.lat, lon:place.lon };
+  const t = sunTimes(new Date());
+  SUN = keep;
+  return t ? `זריחה ${fmtMin(t.rise)} · שקיעה ${fmtMin(t.set)}` : '';
+}
+function drawLoc(){
+  const host = document.getElementById('locList');
+  host.innerHTML = '';
+  PLACES.forEach(pl => {
+    const b = document.createElement('button');
+    if (pl.n === SUN.label) b.classList.add('sel');
+    b.innerHTML = `${pl.n}<small class="num">${sunLine(pl)}</small>`;
+    b.addEventListener('click', () => {
+      SUN = { label:pl.n, lat:pl.lat, lon:pl.lon };
+      close('locScrim'); render(); saveSettings();
+    });
+    host.appendChild(b);
+  });
+  document.getElementById('nameIn').value = SUN.label;
+  document.getElementById('latIn').value  = SUN.lat;
+  document.getElementById('lonIn').value  = SUN.lon;
+}
+document.getElementById('locBtn').addEventListener('click', () => { drawLoc(); open('locScrim'); });
+document.getElementById('locClose').addEventListener('click', () => close('locScrim'));
+document.getElementById('locSave').addEventListener('click', () => {
+  const lat = parseFloat(document.getElementById('latIn').value);
+  const lon = parseFloat(document.getElementById('lonIn').value);
+  if (!isFinite(lat) || !isFinite(lon) || Math.abs(lat) > 66 || Math.abs(lon) > 180){
+    alert('קו רוחב וקו אורך לא תקינים.'); return;
+  }
+  SUN = { label:(document.getElementById('nameIn').value.trim() || 'מיקום ידני'), lat, lon };
+  close('locScrim'); render(); saveSettings();
+});
+
+/* ===== confirm ===== */
+let cfCb = null;
+function confirmBox(title, body, cb){
+  document.getElementById('cfTitle').textContent = title;
+  document.getElementById('cfBody').textContent = body;
+  document.getElementById('cfYes').textContent = 'הבנתי, שמור';
+  cfCb = cb;
+  open('cfScrim');
+}
+document.getElementById('cfYes').addEventListener('click', () => { close('cfScrim'); cfCb && cfCb(); });
+document.getElementById('cfNo').addEventListener('click', () => { close('cfScrim'); render(); });
+
+/* ===== scrim helpers ===== */
+function open(id){ document.getElementById(id).classList.add('open'); }
+function close(id){ document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.scrim').forEach(s =>
+  s.addEventListener('click', e => { if (e.target === s) s.classList.remove('open'); }));
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.querySelectorAll('.scrim.open').forEach(s => s.classList.remove('open'));
+});
+
+/* ===== header ===== */
+function updateHeader(){
+  const now = boxNow();
+  drawClockLine();
+
+  let next = null;
+  for (const day of state.days){
+    for (const e of day.events){
+      const dt = resolveDate(day);
+      dt.setHours(0,0,0,0);
+      dt.setMinutes(evMin(day, e));
+      if (dt > now){ next = { day, e, dt }; break; }
+    }
+    if (next) break;
+  }
+  document.getElementById('nextEv').textContent = next
+    ? `${dayLabel(next.day).replace('כל ','')} ${evT(next.day, next.e)} — ${evText(next.e).lead}`
+    : 'אין לוח פעיל';
+  document.getElementById('lastEv').textContent = lastSentText();
+
+  const st = sunTimes(now);
+  document.getElementById('locBtn').textContent =
+    SUN.label + (st ? ` · זריחה ${fmtMin(st.rise)} · שקיעה ${fmtMin(st.set)}` : '');
+}
+setInterval(updateHeader, 20000);
+
+/* =====================================================================
+   חיבור לקופסה.
+   GET  /api/status    שעה, שעון, שם, מיקום, שלט, פרופיל, יכולות, לימוד
+   POST /api/time      כוונון השעון לשעת המחשב (ספרות של שעה מקומית)
+   POST /api/settings  שם המזגן והמיקום
+   POST /api/remote    השלט הקבוע — משדר ושומר
+   GET/POST /api/schedule  כל הלוח, כמו שהוא
+   POST /api/learn     התחלת האזנה לשלט של המזגן
+   כשהדף נפתח מקובץ ולא מהקופסה, כל הקריאות נכשלות בשקט והדף
+   מתנהג כמו קודם — שעת הדפדפן, ברירות המחדל, בלי שמירה.
+   כשהדף מוגש מרחוק (לא מ-192.168.4.1) אותן קריאות עוברות ב-MQTT —
+   ראה «שליטה מרחוק» בהמשך. הקוד שמעל api() לא יודע ולא צריך לדעת.
+   ===================================================================== */
+const BOX = { online:false, rtc:false, valid:false, now:null, name:'', tz:null, net:null,
+              profile:null, learn:null, capsJson:'', schedLoaded:false };
+/* ההפרש מ-UTC של המחשב, בדקות. הקופסה חיה בשעון מקומי ומקבלת אותו
+   כדי לחשב זריחה ושקיעה באותה שעה מקומית כמו הדף. */
+const tzNow = () => -new Date().getTimezoneOffset();
+
+async function api(path, body){
+  if (FAR) {
+    if (path === '/api/status' && !body) return mqStatusNow();
+    /* מרחוק הטלפון יכול לעמוד באזור זמן אחר. ההפרש מ-UTC של הקופסה נקבע
+       רק בכוונון שעון מפורש (עם אישור), לא כתופעת לוואי של שמירת לוח או שם. */
+    if (body && path !== '/api/time' && 'tz' in body) { body = Object.assign({}, body); delete body.tz; }
+    return mqRequest(body ? 'POST' : 'GET', path, body);
+  }
+  const ctl = new AbortController();
+  const tm = setTimeout(() => ctl.abort(), 3000);
+  try{
+    const r = await fetch(path, {
+      method: body ? 'POST' : 'GET',
+      headers: body ? {'Content-Type':'application/json'} : {},
+      body: body ? JSON.stringify(body) : undefined,
+      cache: 'no-store',
+      signal: ctl.signal
+    });
+    if (!r.ok) throw new Error(r.status);
+    return await r.json();
+  } finally { clearTimeout(tm); }
+}
+
+/* השעה שלפיה חיים: שעת הקופסה כשמחוברים, שעת הדפדפן כשלא. */
+function boxNow(){ return BOX.online && BOX.now ? new Date(BOX.now) : new Date(); }
+
+function applyStatus(st){
+  const first = !BOX.online;
+  BOX.online = true;
+  BOX.rtc    = !!st.rtc;
+  BOX.valid  = !!st.clockValid;
+  BOX.now    = st.time
+    ? new Date(st.time.y, st.time.mo-1, st.time.d, st.time.h, st.time.mi, st.time.s||0)
+    : null;
+  document.querySelector('.boxtag').textContent = st.box || '';
+  if (typeof st.tz === 'number') BOX.tz = st.tz;
+  BOX.net = st.net || null;
+  drawNetMeta();
+  if (st.name){ BOX.name = st.name; document.getElementById('profName').textContent = st.name; }
+  if (st.loc && isFinite(st.loc.lat) && isFinite(st.loc.lon)){
+    SUN = { label: st.loc.name || 'מיקום ידני', lat: +st.loc.lat, lon: +st.loc.lon };
+  }
+  if (st.profile) BOX.profile = st.profile;
+  if (st.learn)   BOX.learn = st.learn;
+  /* יכולות השלט מהקופסה — בונים מחדש את שני השלטים רק כשמשהו השתנה */
+  if (st.caps){
+    const j = JSON.stringify(st.caps);
+    if (j !== BOX.capsJson){
+      BOX.capsJson = j;
+      Object.assign(CAPS, st.caps);
+      buildRemote(); drawPanel();
+    }
+  }
+  drawLearn();
+  if (first && !BOX.schedLoaded) loadSchedule();
+  /* מצב השלט שורד רענון וניתוק חשמל — הוא נשמר בקופסה.
+     אבל לא כשהמשתמש באמצע נגיעה או שידור: אז המסך הוא מקור האמת. */
+  if (st.remote && !sendTimer && !remoteBusy){
+    REMOTE.on = !!st.remote.on;
+    ['mode','temp','fan','turbo','swing'].forEach(k => {
+      if (st.remote[k] !== undefined && st.remote[k] !== null) REMOTE[k] = st.remote[k];
+    });
+    lastSent = st.remote.sentAt || null;
+    drawPanel();
+    document.getElementById('lastEv').textContent = lastSentText();
+    const cur = document.getElementById('rmSend');
+    if (cur.textContent === '—' || cur.textContent === 'שודר')
+      sendState('', lastSent ? 'שודר ' + fmtStamp(lastSent)
+                 : (BOX.profile && !BOX.profile.learned ? 'השלט טרם נלמד — לחץ על שם המזגן כדי ללמד אותו' : 'טרם שודר'));
+  }
+  if (first) render(); else drawClockLine();
+}
+
+/* "2026-09-11 15:04" → "15:04" היום, אחרת "שישי 11.9 15:04" */
+function fmtStamp(s){
+  if (!s) return '';
+  if (s.length < 16) return s;
+  const d = parseD(s.slice(0,10)), hm = s.slice(11);
+  const today = boxNow(); today.setHours(0,0,0,0);
+  return d.getTime() === today.getTime() ? hm : `${DAYNAMES[d.getDay()]} ${fmtD(d)} ${hm}`;
+}
+function lastSentText(){
+  if (!BOX.online) return '—';
+  if (!lastSent) return 'טרם שודר';
+  const f = REMOTE.on ? `הפעלה · ${REMOTE.mode==='heat'?'חום':'קור'} ${REMOTE.temp}°` : 'כיבוי';
+  return `${fmtStamp(lastSent)} — ${f}`;
+}
+
+/* ---------- הלוח: נטען פעם אחת, נדחף בכל שינוי ---------- */
+async function loadSchedule(){
+  try{
+    const sc = await api('/api/schedule');
+    state.days = Array.isArray(sc.days) ? sc.days : [];
+    state.days.forEach(d => { if (!Array.isArray(d.events)) d.events = []; });
+    BOX.schedLoaded = true;
+    render();
+  } catch(e){ /* הקופסה תענה בסבב הבא */ }
+}
+let pushTimer = null;
+function pushSchedule(){
+  if (!BOX.online || !BOX.schedLoaded) return;   /* לא דורסים לוח שעוד לא נטען */
+  clearTimeout(pushTimer);
+  pushTimer = setTimeout(async () => {
+    try{ await api('/api/schedule', { days: state.days, tz: tzNow() }); }
+    catch(e){ alert('הלוח לא נשמר בקופסה. בדוק שהמחשב מחובר לרשת שלה.'); }
+  }, 400);
+}
+
+/* ---------- לימוד השלט ---------- */
+function drawLearn(){
+  const info = document.getElementById('learnInfo');
+  const stat = document.getElementById('learnStat');
+  const btn  = document.getElementById('learnBtn');
+  const p = BOX.profile, l = BOX.learn;
+  if (!BOX.online){ info.textContent = 'אין קשר לקופסה.'; stat.textContent = ''; btn.disabled = true; return; }
+  btn.disabled = false;
+  info.textContent = p && p.learned
+    ? `השלט נלמד: ${p.name}${p.model >= 0 ? ' (דגם ' + p.model + ')' : ''}${p.code ? ' · קוד ' + p.code : ''}. הקופסה בונה כל פקודה בעצמה.`
+    : 'השלט טרם נלמד. שום דבר לא ישודר עד שילמד.';
+  if (!l){ stat.textContent = ''; return; }
+  if (l.active){
+    btn.disabled = true;
+    stat.textContent = `מאזין… כוון את השלט של המזגן אל הקופסה ולחץ הפעלה. (${Math.ceil(l.leftMs/1000)} שניות)`;
+  } else if (learnWaiting){
+    learnWaiting = false;
+    stat.textContent = !l.got
+      ? 'לא התקבל כלום. לבדוק שהמקלט מחובר (GPIO14) ושהשלט מכוון אליו מקרוב.'
+      : l.supported
+        ? `זוהה ${l.proto}${l.code ? ' · ' + l.code : ''}${l.desc ? ' · ' + l.desc : ''}. אפשר לסגור ולנסות את השלט הקבוע.`
+        : `התקבל אות (${l.proto}, ${l.rawLen} מעברים) אבל הספרייה לא מכירה את הפרוטוקול. הקלטה גולמית של כפתורים — בפרוסה הבאה.`;
+  }
+}
+let learnWaiting = false;
+document.getElementById('learnBtn').addEventListener('click', async () => {
+  try{
+    learnWaiting = true;
+    applyStatus(await api('/api/learn', { start:true }));
+  } catch(e){ learnWaiting = false; alert('הקופסה לא הגיבה.'); }
+});
+
+function drawClockLine(){
+  const el = document.getElementById('nowClock');
+  const warn = document.getElementById('clockWarn');
+  const txt  = document.getElementById('clockWarnTxt');
+  const btn  = document.getElementById('clockSync');
+
+  if (!BOX.online){
+    const n = new Date();
+    el.textContent = pad(n.getHours()) + ':' + pad(n.getMinutes()) + ':' + pad(n.getSeconds());
+    warn.classList.add('hide');
+    return;
+  }
+  if (!BOX.rtc){
+    el.textContent = 'מודול השעון לא נמצא';
+    txt.textContent = 'הקופסה לא מוצאת את מודול השעון (DS3231). בלי שעון היא לא תשדר. לבדוק את ארבעת החוטים של המודול.';
+    btn.style.display = 'none';
+    warn.classList.remove('hide');
+    return;
+  }
+  const n = BOX.now;
+  el.textContent = pad(n.getHours()) + ':' + pad(n.getMinutes()) + ':' + pad(n.getSeconds());
+  btn.style.display = '';
+  if (!BOX.valid){
+    txt.textContent = 'שעון הקופסה לא מכוון. לחץ כדי לכוון אותו לשעת המחשב.';
+    warn.classList.remove('hide');
+    return;
+  }
+  const gapMin = Math.round(Math.abs(n - new Date()) / 60000);
+  if (gapMin > 5){
+    const h = Math.floor(gapMin/60), m = gapMin % 60;
+    const g = h ? (m ? `${h} שעות ו-${m} דקות` : `${h} שעות`) : `${m} דקות`;
+    txt.textContent = `שעון הקופסה שונה משעון המחשב ב-${g}. אם המחשב צודק, לחץ לכוון.`;
+    warn.classList.remove('hide');
+  } else {
+    warn.classList.add('hide');
+  }
+}
+
+async function pollBox(){
+  try{ applyStatus(await api('/api/status')); }
+  catch(e){
+    if (BOX.online){ BOX.online = false; document.querySelector('.boxtag').textContent = 'אין קשר לקופסה'; }
+    drawClockLine();
+    drawNetMeta();
+  }
+}
+
+/* כוונון: שולחים את ספרות השעה המקומית של המחשב, לא חותמת זמן.
+   הקופסה חיה בשעון מקומי ולא מכירה אזורי זמן ושעון קיץ. */
+document.getElementById('clockSync').addEventListener('click', async () => {
+  const n = new Date();
+  if (FAR && BOX.tz !== null && BOX.tz !== tzNow() &&
+      !confirm(`הטלפון נמצא באזור זמן אחר מהקופסה (הפרש של ${Math.abs(BOX.tz - tzNow()) / 60} שעות). ` +
+               `הכוונון יכתוב לקופסה את השעה של המקום שבו אתה עכשיו. להמשיך?`)) return;
+  try{
+    applyStatus(await api('/api/time', {
+      y:n.getFullYear(), mo:n.getMonth()+1, d:n.getDate(),
+      h:n.getHours(), mi:n.getMinutes(), s:n.getSeconds(), tz:tzNow()
+    }));
+    updateHeader();
+  } catch(e){ alert('הכוונון נכשל. בדוק שהמחשב מחובר לרשת של הקופסה.'); }
+});
+
+async function saveSettings(){
+  if (!BOX.online) return;
+  try{
+    applyStatus(await api('/api/settings', {
+      name: document.getElementById('profName').textContent,
+      loc: { name: SUN.label, lat: SUN.lat, lon: SUN.lon },
+      tz: tzNow()
+    }));
+  } catch(e){ alert('השמירה לקופסה נכשלה.'); }
+}
+
+/* עריכת שם */
+document.getElementById('profName').addEventListener('click', () => {
+  document.getElementById('profIn').value = document.getElementById('profName').textContent;
+  open('nameScrim');
+  document.getElementById('profIn').focus();
+});
+document.getElementById('nameClose').addEventListener('click', () => close('nameScrim'));
+document.getElementById('nameSave').addEventListener('click', () => {
+  const v = document.getElementById('profIn').value.trim();
+  if (!v) return;
+  document.getElementById('profName').textContent = v;
+  document.title = v + ' — ' + document.querySelector('.boxtag').textContent;
+  close('nameScrim');
+  saveSettings();
+});
+document.getElementById('profIn').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('nameSave').click();
+});
+
+
+/* =====================================================================
+   שליטה מרחוק. אותו דף, שני מסלולים:
+     * מוגש מהקופסה (192.168.4.1) → fetch ישיר, כמו תמיד.
+     * מוגש מכל מקום אחר (GitHub Pages, מותקן כ-PWA) → MQTT מעל WebSocket
+       מול הברוקר. הפקודה נארזת {id,ts,m,p,b} ומגיעה לאותה נקודת קצה בקופסה.
+   הלקוח ל-MQTT כתוב כאן בפנים (MQTT 3.1.1, כמה עשרות שורות) כדי שהדף
+   ימשיך לא לטעון שום נכס חיצוני.
+   ===================================================================== */
+const FAR = /^https?:$/.test(location.protocol) && location.hostname !== '192.168.4.1';
+const RC_KEY = 'mazgan.remote';
+let RC = {};
+try{ RC = JSON.parse(localStorage.getItem(RC_KEY) || '{}'); } catch(e){ RC = {}; }
+
+/* ---------- לקוח MQTT מינימלי מעל WebSocket ---------- */
+class Mq {
+  constructor(o){
+    this.o = o; this.ws = null; this.pid = 1; this.buf = new Uint8Array(0);
+    this.up = false; this.retry = 0; this.stopped = false; this.pingT = null; this.rcT = null;
+    this.onMessage = null; this.onState = null;
+    this.enc = new TextEncoder(); this.dec = new TextDecoder();
+  }
+  connect(){
+    this.stopped = false;
+    clearTimeout(this.rcT);
+    if (this.ws) { try{ this.ws.onclose = null; this.ws.close(); }catch(e){} }
+    let ws;
+    try{ ws = new WebSocket(this.o.url, 'mqtt'); } catch(e){ this._down('bad-url'); return; }
+    this.ws = ws; ws.binaryType = 'arraybuffer';
+    ws.onopen  = () => this._send(this._connectPkt());
+    ws.onmessage = e => this._feed(new Uint8Array(e.data));
+    ws.onerror = () => {};
+    ws.onclose = () => this._down('closed');
+  }
+  close(){ this.stopped = true; clearTimeout(this.rcT); clearInterval(this.pingT); if (this.ws) this.ws.close(); this.up = false; }
+  _down(why){
+    const was = this.up;
+    this.up = false; clearInterval(this.pingT);
+    if (was || why !== 'closed') this.onState && this.onState(false, why);
+    if (this.stopped) return;
+    const wait = Math.min(30000, 2000 * Math.pow(2, this.retry++));
+    this.rcT = setTimeout(() => this.connect(), wait);
+  }
+  /* --- אריזה --- */
+  _str(s){ const b = this.enc.encode(s); const r = new Uint8Array(b.length + 2); r[0] = b.length >> 8; r[1] = b.length & 255; r.set(b, 2); return r; }
+  _cat(...parts){ let n = 0; parts.forEach(p => n += p.length); const r = new Uint8Array(n); let i = 0; parts.forEach(p => { r.set(p, i); i += p.length; }); return r; }
+  _pkt(hdr, body){
+    const len = []; let x = body.length;
+    do { let d = x % 128; x = Math.floor(x / 128); if (x > 0) d |= 128; len.push(d); } while (x > 0);
+    return this._cat(new Uint8Array([hdr]), new Uint8Array(len), body);
+  }
+  _connectPkt(){
+    const flags = 0x02 | (this.o.user ? 0x80 : 0) | (this.o.pass ? 0x40 : 0);
+    const vh = this._cat(this._str('MQTT'), new Uint8Array([4, flags, 0, this.o.keepalive || 30]));
+    let pl = this._str(this.o.clientId);
+    if (this.o.user) pl = this._cat(pl, this._str(this.o.user));
+    if (this.o.pass) pl = this._cat(pl, this._str(this.o.pass));
+    return this._pkt(0x10, this._cat(vh, pl));
+  }
+  _send(p){ if (this.ws && this.ws.readyState === 1) this.ws.send(p); }
+  subscribe(topic, qos = 0){
+    const id = this._nextPid();
+    this._send(this._pkt(0x82, this._cat(new Uint8Array([id >> 8, id & 255]), this._str(topic), new Uint8Array([qos]))));
+  }
+  publish(topic, payload, qos = 0, retain = false){
+    if (!this.up) return false;
+    let vh = this._str(topic);
+    if (qos) { const id = this._nextPid(); vh = this._cat(vh, new Uint8Array([id >> 8, id & 255])); }
+    this._send(this._pkt(0x30 | (qos << 1) | (retain ? 1 : 0), this._cat(vh, this.enc.encode(payload))));
+    return true;
+  }
+  _nextPid(){ this.pid = (this.pid % 65535) + 1; return this.pid; }
+  /* --- פירוק. חבילה יכולה להתפצל בין הודעות WebSocket, לכן מצטבר --- */
+  _feed(chunk){
+    this.buf = this._cat(this.buf, chunk);
+    for (;;) {
+      if (this.buf.length < 2) return;
+      let mult = 1, len = 0, i = 1, d;
+      do { if (i >= this.buf.length) return; d = this.buf[i++]; len += (d & 127) * mult; mult *= 128; } while (d & 128);
+      if (this.buf.length < i + len) return;
+      const hdr = this.buf[0], body = this.buf.slice(i, i + len);
+      this.buf = this.buf.slice(i + len);
+      this._handle(hdr, body);
+    }
+  }
+  _handle(hdr, b){
+    const type = hdr >> 4;
+    if (type === 2) {                                    /* CONNACK */
+      if (b[1] === 0) {
+        this.up = true; this.retry = 0;
+        clearInterval(this.pingT);
+        this.pingT = setInterval(() => this._send(new Uint8Array([0xC0, 0])), ((this.o.keepalive || 30) * 1000) * 0.6);
+        this.onState && this.onState(true, 'ok');
+      } else {
+        this.stopped = true;                             /* פרטים שגויים — לא לנסות שוב לבד */
+        this.onState && this.onState(false, 'refused-' + b[1]);
+        this.ws.close();
+      }
+    } else if (type === 3) {                             /* PUBLISH */
+      const qos = (hdr >> 1) & 3;
+      const tl = (b[0] << 8) | b[1];
+      const topic = this.dec.decode(b.slice(2, 2 + tl));
+      let p = 2 + tl;
+      if (qos) { const id = (b[p] << 8) | b[p + 1]; p += 2; this._send(new Uint8Array([0x40, 2, id >> 8, id & 255])); }
+      this.onMessage && this.onMessage(topic, this.dec.decode(b.slice(p)));
+    }
+    /* PUBACK, SUBACK, PINGRESP — אין מה לעשות איתם */
+  }
+}
+
+/* ---------- הצד של הדף: תור בקשות, סטטוס אחרון, מצב הקשר ---------- */
+const MQ = { c:null, cached:null, cachedAt:0, up:false, pending:new Map(), lastSeen:0, why:'', box:'' };
+
+function mqTopics(){ return { cmd:`mazgan/${RC.box}/cmd`, rsp:`mazgan/${RC.box}/rsp`, status:`mazgan/${RC.box}/status` }; }
+function mqReady(){ return !!(RC.host && RC.user && RC.pass && RC.box); }
+
+function mqStart(){
+  if (!FAR) return;
+  if (MQ.c) { MQ.c.close(); MQ.c = null; }
+  MQ.cached = null; MQ.up = false;
+  if (!mqReady()) { MQ.why = 'not-set'; drawNetMeta(); return; }
+  const host = RC.host.replace(/^wss?:\/\//, '').replace(/\/.*$/, '').replace(/:\d+$/, '');
+  MQ.c = new Mq({ url: 'wss://' + host + ':8884/mqtt', user: RC.user, pass: RC.pass,
+                  clientId: 'phone-' + Math.random().toString(36).slice(2, 10), keepalive: 30 });
+  MQ.c.onState = (up, why) => {
+    MQ.up = up; MQ.why = why;
+    if (up) { const t = mqTopics(); MQ.c.subscribe(t.status, 0); MQ.c.subscribe(t.rsp, 0); }
+    else { MQ.cached = null; }
+    drawNetMeta(); pollBox();
+  };
+  MQ.c.onMessage = (topic, payload) => {
+    const t = mqTopics();
+    let msg; try{ msg = JSON.parse(payload); } catch(e){ return; }
+    if (topic === t.status) {
+      if (msg.online === false) { MQ.cached = null; MQ.why = 'box-offline'; }
+      else { MQ.cached = msg; MQ.cachedAt = Date.now(); MQ.lastSeen = Date.now(); MQ.why = 'ok'; }
+      drawNetMeta(); pollBox();
+    } else if (topic === t.rsp) {
+      const w = MQ.pending.get(msg.id);
+      if (!w) return;
+      MQ.pending.delete(msg.id); clearTimeout(w.timer);
+      if (msg.c >= 200 && msg.c < 300) w.resolve(msg.b);
+      else w.reject(new Error((msg.b && msg.b.error) || msg.c));
+    }
+  };
+  MQ.c.connect();
+}
+
+/* בקשה מרחוק = פרסום ל-cmd והמתנה לתשובה עם אותו id */
+function mqRequest(method, path, body){
+  return new Promise((resolve, reject) => {
+    if (!MQ.c || !MQ.up) { reject(new Error('mqtt-down')); return; }
+    const id = Math.random().toString(36).slice(2, 8);
+    const timer = setTimeout(() => { MQ.pending.delete(id); reject(new Error('timeout')); }, 12000);
+    MQ.pending.set(id, { resolve, reject, timer });
+    const pkt = { id, ts: Math.floor(Date.now() / 1000), m: method, p: path };
+    if (body) pkt.b = body;
+    MQ.c.publish(mqTopics().cmd, JSON.stringify(pkt), 1, false);   /* QoS 1, לא retained */
+  });
+}
+
+/* הסטטוס האחרון שהתקבל, עם השעה מקודמת לפי הזמן שעבר מאז */
+function mqStatusNow(){
+  if (!MQ.cached) throw new Error(MQ.why || 'no-status');
+  const age = Date.now() - MQ.cachedAt;
+  if (age > 45000) { MQ.why = 'silent'; throw new Error('stale-status'); }
+  const st = Object.assign({}, MQ.cached);
+  if (st.time) {
+    const d = new Date(st.time.y, st.time.mo - 1, st.time.d, st.time.h, st.time.mi, st.time.s || 0);
+    d.setTime(d.getTime() + age);
+    st.time = { y:d.getFullYear(), mo:d.getMonth() + 1, d:d.getDate(), h:d.getHours(), mi:d.getMinutes(), s:d.getSeconds() };
+  }
+  return st;
+}
+
+/* השורה בכותרת */
+function netStateText(){
+  if (FAR) {
+    if (!mqReady()) return 'לא מוגדר — לחץ להגדרה';
+    if (!MQ.up) return MQ.why && MQ.why.startsWith('refused') ? 'הברוקר דחה את פרטי ההתחברות' : 'מתחבר לברוקר…';
+    if (MQ.cached && Date.now() - MQ.cachedAt <= 45000) return 'מחובר · הקופסה עונה';
+    const seen = MQ.lastSeen ? ' · נראתה לאחרונה ' + new Date(MQ.lastSeen).toTimeString().slice(0, 5) : '';
+    return (MQ.why === 'box-offline' ? 'הקופסה לא מחוברת לאינטרנט' : 'ממתין לקופסה') + seen;
+  }
+  const n = BOX.net;
+  if (!n) return '';
+  if (n.sta === 'off') return 'לא מוגדר — לחץ להגדרה';
+  if (n.sta !== 'connected') return `מתחבר לרשת ${n.ssid}…`;
+  if (!n.host) return 'מחובר לרשת, הברוקר לא מוגדר';
+  return n.mqtt ? 'מחובר לברוקר' : 'מחובר לרשת, מתחבר לברוקר…';
+}
+function drawNetMeta(){
+  const el = document.getElementById('netMeta');
+  const show = FAR || !!BOX.net;
+  el.classList.toggle('hide', !show);
+  if (show) document.getElementById('netBtn').textContent = netStateText();
+  if (FAR && !BOX.online) document.querySelector('.boxtag').textContent = RC.box || 'מרחוק';
+}
+
+/* ---------- חלון ההגדרות ---------- */
+const $n = id => document.getElementById(id);
+async function openNet(){
+  $n('netBoxSec').style.display   = FAR ? 'none' : '';
+  $n('netPhoneSec').style.display = FAR ? '' : 'none';
+  if (FAR) {
+    $n('rcHost').value = RC.host || ''; $n('rcUser').value = RC.user || '';
+    $n('rcPass').value = RC.pass || ''; $n('rcBox').value  = RC.box || '';
+    $n('netPhoneStat').textContent = netStateText();
+  } else {
+    $n('netBoxStat').textContent = 'טוען…';
+    try{
+      const n = await api('/api/net');
+      $n('bxSsid').value = n.ssid || ''; $n('bxPass').value = ''; $n('bxPass').placeholder = n.hasPass ? '(שמורה — השאר ריק כדי לא לשנות)' : '';
+      $n('bxHost').value = n.host || ''; $n('bxPort').value = n.port || 8883; $n('bxUser').value = n.user || '';
+      $n('bxMpass').value = ''; $n('bxMpass').placeholder = n.hasMpass ? '(שמורה — השאר ריק כדי לא לשנות)' : '';
+      $n('netBoxStat').textContent = netStateText() + (n.ip ? ` · כתובת ברשת ${n.ip}` : '') + (n.ntp ? ' · NTP מסונכרן' : '');
+    } catch(e){ $n('netBoxStat').textContent = 'הקופסה לא ענתה.'; }
+  }
+  open('netScrim');
+}
+$n('netBtn').addEventListener('click', openNet);
+$n('netClose').addEventListener('click', () => close('netScrim'));
+$n('netBoxSave').addEventListener('click', async () => {
+  const b = { ssid: $n('bxSsid').value.trim(), pass: $n('bxPass').value, host: $n('bxHost').value.trim(),
+              port: +$n('bxPort').value || 8883, user: $n('bxUser').value.trim(), mpass: $n('bxMpass').value };
+  $n('netBoxStat').textContent = 'שומר…';
+  try{ await api('/api/net', b); $n('netBoxStat').textContent = 'נשמר. הקופסה מתחברת — הקשר ל-192.168.4.1 עלול לקפוץ לשנייה.'; }
+  catch(e){ $n('netBoxStat').textContent = 'השמירה נכשלה.'; }
+});
+$n('netBoxClear').addEventListener('click', async () => {
+  if (!confirm('למחוק את פרטי הרשת והברוקר מהקופסה? היא תישאר AP בלבד.')) return;
+  try{ await api('/api/net', { clear:true }); $n('netBoxStat').textContent = 'נמחק.'; ['bxSsid','bxPass','bxHost','bxUser','bxMpass'].forEach(i => $n(i).value = ''); }
+  catch(e){ $n('netBoxStat').textContent = 'המחיקה נכשלה.'; }
+});
+$n('netPhoneSave').addEventListener('click', () => {
+  RC = { host: $n('rcHost').value.trim(), user: $n('rcUser').value.trim(), pass: $n('rcPass').value, box: $n('rcBox').value.trim() };
+  localStorage.setItem(RC_KEY, JSON.stringify(RC));
+  $n('netPhoneStat').textContent = 'נשמר בטלפון. מתחבר…';
+  mqStart();
+});
+
+/* ---------- PWA — רק כשהדף לא מוגש מהקופסה ---------- */
+if (FAR) {
+  const l = document.createElement('link'); l.rel = 'manifest'; l.href = 'manifest.json'; document.head.appendChild(l);
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && MQ.c && !MQ.up) MQ.c.connect(); });
+  document.querySelector('.boxtag').textContent = RC.box || 'מרחוק';
+  mqStart();
+}
+
+drawPanel();
+sendState('', '—');
+pollBox();
+setInterval(pollBox, 1000);
+
+render();
+</script>
+</body>
+</html>
