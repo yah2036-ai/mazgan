@@ -430,9 +430,83 @@ input[type=range]{width:100%;accent-color:var(--accent);height:30px}
 .face .n:hover{background:var(--rule)}
 .face .n.sel{background:var(--accent);color:var(--accent-ink)}
 .face .n.sel:hover{background:var(--accent)}
+
+/* ===================== מעבר בין המכשירים: פס תחתון ===================== */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:40;display:none;gap:10px;
+  padding:10px 14px calc(env(safe-area-inset-bottom) + 10px);
+  background:color-mix(in srgb, var(--card) 88%, transparent);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--rule)}
+.tabs.show{display:flex}
+.tabs button{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:1px;
+  padding:9px 14px;border-radius:16px;border:1px solid var(--rule);background:var(--card);text-align:right;
+  transition:background .2s,border-color .2s,transform .12s}
+.tabs button:active{transform:scale(.97)}
+.tabs .nm{font-size:15px;font-weight:600;display:flex;align-items:center;gap:7px}
+.tabs .dot{width:8px;height:8px;border-radius:50%;background:var(--off);flex:none}
+.tabs .dot.on{background:var(--heat);box-shadow:0 0 8px var(--heat)}
+.tabs .dot.cool{background:var(--cool);box-shadow:0 0 8px var(--cool)}
+.tabs .dot.away{background:transparent;border:1.5px solid var(--ink-3)}
+.tabs .st{font-size:12.5px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.tabs button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.tabs button[aria-pressed="true"] .st{color:color-mix(in srgb, var(--paper) 75%, transparent)}
+body.has-tabs{padding-bottom:calc(env(safe-area-inset-bottom) + 76px)}
+body.tab-bl .air,body.tab-bl .hd-meta,body.tab-bl #clockWarn,body.tab-bl .wrap{display:none!important}
+.bl{display:none;max-width:760px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 16px) 18px 30px}
+body.tab-bl .bl{display:block}
+
+/* ===================== השמיכה ===================== */
+.bl-hero{background:var(--night);color:#EEF5FA;border-radius:24px;padding:20px 20px 22px;margin-bottom:16px;position:relative;overflow:hidden}
+.bl-hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(110% 80% at 80% 0%, color-mix(in srgb, var(--heat) 0%, transparent), transparent 70%)}
+.bl-hero.on::before{background:radial-gradient(110% 90% at 78% 0%, color-mix(in srgb, #FF8A3D 55%, transparent), transparent 68%),
+  radial-gradient(80% 60% at 10% 100%, color-mix(in srgb, #C2410C 35%, transparent), transparent 70%)}
+.bl-hero>*{position:relative}
+.bl-id{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.bl-id h1{margin:0;font-size:23px;font-weight:500}
+.bl-big{font-size:34px;font-weight:300;line-height:1.15;margin:22px 0 6px}
+.bl-sub{font-size:15px;color:#B9C9D4}
+.bl-conn{font-size:12.5px;color:#AFC1CE;margin-top:14px}
+.bl-conn.bad{color:#FF9E85}
+.bl .warnbar{margin:0 0 14px}
+.bl-sec{margin:22px 0 10px;display:flex;align-items:center;gap:10px}
+.bl-sec h2{margin:0;font-size:14px;font-weight:500;color:var(--ink-3);flex:1}
+.bl-list{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);overflow:hidden}
+.bl-row{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--rule);width:100%;text-align:right}
+.bl-row:first-child{border-top:none}
+.bl-row .t{font-size:17px;font-weight:500}
+.bl-row .d{font-size:13.5px;color:var(--ink-2)}
+.bl-row .grow{flex:1;min-width:0}
+.bl-tag{font-size:12px;font-weight:500;padding:3px 10px;border-radius:999px;background:var(--off-soft);color:var(--ink-2);white-space:nowrap}
+.bl-tag.ok{background:var(--green-soft);color:var(--green)}
+.bl-tag.on{background:var(--heat-soft);color:var(--heat)}
+.bl-tag.miss{background:var(--warm-bg);color:var(--warm-ink)}
+button.bl-row:hover{background:var(--off-soft)}
+.bl-row.off .t,.bl-row.off .d{opacity:.45}
+.bl-empty{padding:20px 16px;color:var(--ink-3);font-size:15px}
+.bl-days{display:flex;gap:6px;direction:rtl}
+.bl-days button{flex:1;aspect-ratio:1;max-width:46px;border-radius:50%;border:1px solid var(--rule);font-size:15px;font-weight:500;color:var(--ink-2)}
+.bl-days button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.bl-off{display:flex;align-items:center;justify-content:center;gap:14px;border:1px solid var(--rule);border-radius:14px;padding:10px;margin-top:10px}
+.bl-off .tv{font-size:20px;min-width:150px;text-align:center}
+.bl-prev{background:var(--off-soft);border-radius:12px;padding:10px 13px;font-size:14px;line-height:1.5;color:var(--ink-2)}
+.bl-prev.bad{background:var(--heat-soft);color:var(--heat)}
+.bl-err{color:var(--heat);font-size:14px;margin-top:10px;min-height:1.2em}
+.bl-set{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:16px}
+.bl-set h3{margin:0 0 4px;font-size:16px;font-weight:500}
+.bl-set p{margin:0 0 12px;font-size:13.5px;color:var(--ink-2);line-height:1.5}
+.bl-set+.bl-set{margin-top:12px}
+.bl-ang{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bl-ang label{display:grid;gap:4px;font-size:13px;color:var(--ink-3)}
+.bl-ang input{border:1px solid var(--rule);border-radius:11px;padding:9px 11px;font:inherit;font-size:16px;background:var(--paper);color:var(--ink);width:100%}
+.bl-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.bl-btns button{flex:1;min-width:90px;border:1px solid var(--rule);border-radius:12px;padding:10px 8px;font-weight:500}
+.bl-btns button:hover{border-color:var(--accent)}
+.bl-log{font-size:13.5px;color:var(--ink-2);line-height:1.7}
+.bl .hide,#bsScrim .hide,.tabs .hide{display:none!important}
 </style>
 </head>
 <body>
+<nav class="tabs" id="tabs" aria-label="מכשיר"><button data-tab="ac" aria-pressed="true"><span class="nm"><span class="dot"></span>מזגן</span><span class="st">—</span></button><button data-tab="bl" aria-pressed="false"><span class="nm"><span class="dot"></span>שמיכה</span><span class="st">—</span></button></nav>
 
 <section class="air" id="airField">
   <canvas id="fog" aria-hidden="true"></canvas>
@@ -530,6 +604,99 @@ input[type=range]{width:100%;accent-color:var(--accent);height:30px}
 
   <div id="days"></div>
   <div class="plusrow"><button class="plus" id="addDay" aria-label="הוסף יום">+</button></div>
+</div>
+
+<!-- ===================== השמיכה ===================== -->
+<main class="bl" id="blanketView">
+  <section class="bl-hero" id="blHero">
+    <div class="bl-id"><h1>שמיכה</h1><span class="boxtag num" id="blBoxTag">Shmicha-1</span></div>
+    <div class="bl-big" id="blBig">—</div>
+    <div class="bl-sub" id="blSub"></div>
+    <div class="bl-conn" id="blConn">—</div>
+  </section>
+  <div class="warnbar hide" id="blWarn"></div>
+
+  <div class="bl-sec"><h2>הקרובות</h2></div>
+  <div class="bl-list" id="blOcc"></div>
+
+  <div class="bl-sec"><h2>מנות</h2></div>
+  <div class="bl-list" id="blSess"></div>
+  <div class="plusrow"><button class="plus" id="blAdd" aria-label="הוסף מנה">+</button></div>
+
+  <div class="bl-sec"><h2>הגדרות</h2></div>
+  <div class="bl-set">
+    <h3>אחרי הפסקת חשמל באמצע מנה</h3>
+    <p>בניסוי ב-14.10 השמיכה נשארה כבויה אחרי שהחשמל חזר, והשלט חזר לחום 4 וטיימר של 3 שעות. "להדליק": המכשיר מדליק אותה מחדש. "לא לגעת": מתאים לשמיכה שחוזרת לחמם לבד.</p>
+    <div class="segbar" id="blPc">
+      <button data-v="1" aria-pressed="false">להדליק</button>
+      <button data-v="2" aria-pressed="false">לא לגעת</button>
+    </div>
+    <div class="hint" id="blPcHint" style="margin-top:8px"></div>
+  </div>
+  <div class="bl-set">
+    <h3>הטיימר בשלט</h3>
+    <p>הטיימר בשלט נשאר תמיד על ברירת המחדל שלו. במנה ארוכה יותר המכשיר מכבה, מחכה 20 שניות ומדליק שוב, לפני שהטיימר נגמר.</p>
+    <div class="bl-ang">
+      <label>הטיימר בשלט (דקות) <input id="blTm" type="number" min="30" max="720" class="num"></label>
+      <label>חידוש כל (דקות) <input id="blRn" type="number" min="20" max="719" class="num"></label>
+    </div>
+    <div class="bl-btns"><button id="blTmSave">שמור</button></div>
+  </div>
+  <div class="bl-set">
+    <h3>זוויות הסרוו</h3>
+    <div class="bl-ang">
+      <label>הפעלה, מנוחה <input id="blA0" type="number" min="0" max="180" class="num"></label>
+      <label>הפעלה, לחיצה <input id="blA1" type="number" min="0" max="180" class="num"></label>
+      <label>HEAT, מנוחה <input id="blA2" type="number" min="0" max="180" class="num"></label>
+      <label>HEAT, לחיצה <input id="blA3" type="number" min="0" max="180" class="num"></label>
+    </div>
+    <div class="bl-btns"><button id="blAngSave">שמור זוויות</button></div>
+    <h3 style="margin-top:18px">לחיצת בדיקה</h3>
+    <div class="bl-btns">
+      <button data-k="power">הפעלה</button>
+      <button data-k="heat">HEAT</button>
+      <button data-k="seq">הפעלה + HEAT</button>
+    </div>
+    <div class="hint" id="blTestStat" style="margin-top:8px"></div>
+  </div>
+  <div class="bl-set">
+    <h3>פעולות אחרונות</h3>
+    <div class="bl-log" id="blLog">—</div>
+    <div class="bl-btns"><button id="blNet">שליטה מרחוק</button><button id="blClock" class="hide">כוון את השעון לשעת הטלפון</button></div>
+  </div>
+</main>
+
+<!-- עריכת מנה -->
+<div class="scrim" id="bsScrim">
+  <div class="sheet" role="dialog" aria-modal="true">
+    <div class="sheet-hd">
+      <div style="flex:1"><h3 id="bsTitle">מנה חדשה</h3></div>
+      <button class="x" id="bsClose" aria-label="סגור">✕</button>
+    </div>
+    <div class="field">
+      <label>ימים (יום ההתחלה)</label>
+      <div class="bl-days" id="bsDays"></div>
+    </div>
+    <div class="field">
+      <label>התחלה: הפעלה ואז HEAT/TIMER</label>
+      <div class="segbar" id="bsStartKind"><button data-a="0">שעה קבועה</button><button data-a="1">ביחס לשקיעה</button></div>
+      <button class="timebtn num" id="bsStartT" style="margin-top:10px">22:00</button>
+      <div class="bl-off hide" id="bsStartOff"><button class="stepbtn" data-d="5">+</button><span class="tv num"></span><button class="stepbtn" data-d="-5">−</button></div>
+    </div>
+    <div class="field">
+      <label>סיום: הפעלה בלבד</label>
+      <div class="segbar" id="bsEndKind"><button data-a="0">שעה קבועה</button><button data-a="1">ביחס לשקיעה</button></div>
+      <button class="timebtn num" id="bsEndT" style="margin-top:10px">06:00</button>
+      <div class="bl-off hide" id="bsEndOff"><button class="stepbtn" data-d="5">+</button><span class="tv num"></span><button class="stepbtn" data-d="-5">−</button></div>
+    </div>
+    <div class="bl-prev" id="bsPrev"></div>
+    <label class="chk" style="margin-top:14px"><input type="checkbox" id="bsOn" checked> פעילה</label>
+    <div class="bl-err" id="bsErr"></div>
+    <div class="sheet-ft">
+      <button class="del" id="bsDel">מחק</button>
+      <button class="save" id="bsSave">שמור</button>
+    </div>
+  </div>
 </div>
 
 <!-- event sheet -->
@@ -726,6 +893,7 @@ input[type=range]{width:100%;accent-color:var(--accent);height:30px}
           <label>שם הקופסה <input id="rcBox" type="text" placeholder="Mazgan-1" autocapitalize="off" dir="ltr"></label>
         </div>
         <label>סיסמה <input id="rcPass" type="password" autocomplete="off"></label>
+        <label>שם השמיכה <input id="rcBl" type="text" placeholder="Shmicha-1" autocapitalize="off" dir="ltr"></label>
         <button class="save" id="netPhoneSave">שמור והתחבר</button>
         <div class="hint" id="netPhoneStat" style="margin:0"></div>
       </div>
@@ -1427,6 +1595,7 @@ document.getElementById('evClose').addEventListener('click', () => close('evScri
 
 /* ===== clock picker ===== */
 let clk = { h:15, m:0, phase:'h' };
+let clkHook = null;   /* כשמוגדר: השעון נפתח מעורך השמיכה, והתוצאה חוזרת אליו */
 
 document.getElementById('evTime').addEventListener('click', () => {
   clk.h = +cur.draft.t.slice(0,2);
@@ -1487,11 +1656,12 @@ function drawClock(){
 document.getElementById('clkH').addEventListener('click', () => { clk.phase='h'; drawClock(); });
 document.getElementById('clkM').addEventListener('click', () => { clk.phase='m'; drawClock(); });
 document.getElementById('clkOk').addEventListener('click', () => {
+  if (clkHook) { const f = clkHook; clkHook = null; close('clkScrim'); f(clk.h, clk.m); return; }
   if (cur.draft.t !== pad(clk.h) + ':' + pad(clk.m)) cur.timeTouched = true;
   cur.draft.t = pad(clk.h) + ':' + pad(clk.m);
   close('clkScrim'); syncSheet();
 });
-document.getElementById('clkCancel').addEventListener('click', () => close('clkScrim'));
+document.getElementById('clkCancel').addEventListener('click', () => { clkHook = null; close('clkScrim'); });
 
 /* ===== add day ===== */
 const MONTHS = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
@@ -2064,7 +2234,7 @@ class Mq {
 /* ---------- הצד של הדף: תור בקשות, סטטוס אחרון, מצב הקשר ---------- */
 const MQ = { c:null, cached:null, cachedAt:0, up:false, pending:new Map(), lastSeen:0, why:'', box:'' };
 
-function mqTopics(){ return { cmd:`mazgan/${RC.box}/cmd`, rsp:`mazgan/${RC.box}/rsp`, status:`mazgan/${RC.box}/status` }; }
+function mqTopics(box = RC.box){ return { cmd:`mazgan/${box}/cmd`, rsp:`mazgan/${box}/rsp`, status:`mazgan/${box}/status` }; }
 function mqReady(){ return !!(RC.host && RC.user && RC.pass && RC.box); }
 
 function mqStart(){
@@ -2077,13 +2247,17 @@ function mqStart(){
                   clientId: 'phone-' + Math.random().toString(36).slice(2, 10), keepalive: 30 });
   MQ.c.onState = (up, why) => {
     MQ.up = up; MQ.why = why;
-    if (up) { const t = mqTopics(); MQ.c.subscribe(t.status, 0); MQ.c.subscribe(t.rsp, 0); }
+    if (up) { const t = mqTopics(); MQ.c.subscribe(t.status, 0); MQ.c.subscribe(t.rsp, 0);
+              const b = mqTopics(blBox()); MQ.c.subscribe(b.status, 0); MQ.c.subscribe(b.rsp, 0); }
     else { MQ.cached = null; }
-    drawNetMeta(); pollBox();
+    drawNetMeta(); pollBox(); blRender();
   };
   MQ.c.onMessage = (topic, payload) => {
     const t = mqTopics();
     let msg; try{ msg = JSON.parse(payload); } catch(e){ return; }
+    const bt = mqTopics(blBox());
+    if (topic === bt.status) { blOnMessage('status', msg); return; }
+    if (topic === bt.rsp)    { blOnMessage('rsp', msg); return; }
     if (topic === t.status) {
       if (msg.online === false) { MQ.cached = null; MQ.why = 'box-offline'; }
       else { MQ.cached = msg; MQ.cachedAt = Date.now(); MQ.lastSeen = Date.now(); MQ.why = 'ok'; }
@@ -2100,7 +2274,7 @@ function mqStart(){
 }
 
 /* בקשה מרחוק = פרסום ל-cmd והמתנה לתשובה עם אותו id */
-function mqRequest(method, path, body){
+function mqRequest(method, path, body, box = RC.box){
   return new Promise((resolve, reject) => {
     if (!MQ.c || !MQ.up) { reject(new Error('mqtt-down')); return; }
     const id = Math.random().toString(36).slice(2, 8);
@@ -2108,7 +2282,7 @@ function mqRequest(method, path, body){
     MQ.pending.set(id, { resolve, reject, timer });
     const pkt = { id, ts: Math.floor(Date.now() / 1000), m: method, p: path };
     if (body) pkt.b = body;
-    MQ.c.publish(mqTopics().cmd, JSON.stringify(pkt), 1, false);   /* QoS 1, לא retained */
+    MQ.c.publish(mqTopics(box).cmd, JSON.stringify(pkt), 1, false);   /* QoS 1, לא retained */
   });
 }
 
@@ -2159,7 +2333,7 @@ async function openNet(){
   $n('netPhoneSec').style.display = FAR ? '' : 'none';
   if (FAR) {
     $n('rcHost').value = RC.host || ''; $n('rcUser').value = RC.user || '';
-    $n('rcPass').value = RC.pass || ''; $n('rcBox').value  = RC.box || '';
+    $n('rcPass').value = RC.pass || ''; $n('rcBox').value  = RC.box || ''; $n('rcBl').value = RC.blanket || '';
     $n('netPhoneStat').textContent = netStateText();
   } else {
     $n('netBoxStat').textContent = 'טוען…';
@@ -2188,11 +2362,391 @@ $n('netBoxClear').addEventListener('click', async () => {
   catch(e){ $n('netBoxStat').textContent = 'המחיקה נכשלה.'; }
 });
 $n('netPhoneSave').addEventListener('click', () => {
-  RC = { host: $n('rcHost').value.trim(), user: $n('rcUser').value.trim(), pass: $n('rcPass').value, box: $n('rcBox').value.trim() };
+  RC = { host: $n('rcHost').value.trim(), user: $n('rcUser').value.trim(), pass: $n('rcPass').value, box: $n('rcBox').value.trim(),
+         blanket: $n('rcBl').value.trim() };
   localStorage.setItem(RC_KEY, JSON.stringify(RC));
   $n('netPhoneStat').textContent = 'נשמר בטלפון. מתחבר…';
   mqStart();
 });
+
+/* =====================================================================
+   השמיכה — לשונית שנייה. מכשיר נפרד (ESP32 במזח), אותו ברוקר ואותו חיבור.
+   נושאים: mazgan/<שם השמיכה>/cmd|rsp|status, בדיוק כמו קופסת המזגן.
+   עובד רק כשהדף מוגש מרחוק (FAR). ברשת של קופסת המזגן אין אינטרנט, ושם
+   הלשונית מוסתרת.
+   הזמנים מהמכשיר הם "דקות מוחלטות": ימים מאז 1970 * 1440 + דקה ביום, בשעון קיר.
+   ===================================================================== */
+const BL = { cached:null, cachedAt:0, lastSeen:0, why:'', draft:null, editIdx:-1 };
+const BL_DAYS = ['א','ב','ג','ד','ה','ו','ש'];
+const BL_JLM = { lat:31.778, lon:35.235 };
+const blBox = () => RC.blanket || 'Shmicha-1';
+
+/* דקה מוחלטת → פרטים. בלי אזורי זמן: זה כבר שעון קיר של המכשיר. */
+function blParts(abs){
+  const d = new Date(Date.UTC(1970,0,1) + abs*60000);
+  return { day:Math.floor(abs/1440), wd:d.getUTCDay(), dd:d.getUTCDate(), mo:d.getUTCMonth()+1, hm:fmtMin(abs % 1440) };
+}
+function blDayName(abs, nowAbs){
+  const p = blParts(abs), today = Math.floor(nowAbs/1440);
+  if (p.day === today) return 'היום';
+  if (p.day === today + 1) return 'מחר';
+  if (p.day === today - 1) return 'אתמול';
+  return DAYNAMES[p.wd];
+}
+function blWhen(abs, nowAbs){ return blDayName(abs, nowAbs) + ' ' + blParts(abs).hm; }
+function blDur(m){ return Math.floor(m/60) + ':' + pad(m % 60); }
+
+/* השעה אצל המכשיר עכשיו: הסטטוס האחרון + הזמן שעבר מאז */
+function blNow(){
+  const st = BL.cached;
+  if (!st || st.now < 0) return -1;
+  return st.now + Math.floor((Date.now() - BL.cachedAt + (st.time ? st.time.s*1000 : 0)) / 60000);
+}
+
+function blOnline(){ return !!BL.cached && Date.now() - BL.cachedAt <= 45000; }
+
+/* ---------- MQTT ---------- */
+function blOnMessage(kind, msg){
+  if (kind === 'status') {
+    if (msg.online === false) { BL.cached = null; BL.why = 'box-offline'; }
+    else { BL.cached = msg; BL.cachedAt = Date.now(); BL.lastSeen = Date.now(); BL.why = 'ok'; }
+    blRender();
+  } else if (kind === 'rsp') {
+    const w = MQ.pending.get(msg.id);
+    if (!w) return;
+    MQ.pending.delete(msg.id); clearTimeout(w.timer);
+    if (msg.c >= 200 && msg.c < 300) w.resolve(msg.b);
+    else { const e = new Error((msg.b && msg.b.error) || msg.c); e.body = msg.b; w.reject(e); }
+  }
+}
+async function blApi(path, body){
+  if (!FAR) throw new Error('local');
+  const r = await mqRequest(body ? 'POST' : 'GET', path, body, blBox());
+  if (r && r.box) { BL.cached = r; BL.cachedAt = Date.now(); BL.lastSeen = Date.now(); blRender(); }
+  return r;
+}
+
+/* ---------- ציור ---------- */
+function blConnText(){
+  if (!mqReady()) return { t:'שליטה מרחוק לא מוגדרת', bad:true };
+  if (!MQ.up) return { t:'מתחבר לברוקר…', bad:true };
+  if (blOnline()) {
+    const st = BL.cached;
+    return { t:'מחובר' + (st.clockValid ? ' · השעה אצלה ' + blParts(blNow()).hm : ''), bad:false };
+  }
+  const seen = BL.lastSeen ? ' · נראתה לאחרונה ' + new Date(BL.lastSeen).toTimeString().slice(0,5) : '';
+  return { t:(BL.why === 'box-offline' ? 'השמיכה לא מחוברת' : 'ממתין לשמיכה') + seen, bad:true };
+}
+
+function blSpecText(sp){
+  if (sp.a === 0) return fmtMin(sp.v);
+  const a = Math.abs(sp.v), h = Math.floor(a / 60), m = a % 60;
+  const hs = h === 0 ? '' : h === 1 ? 'שעה' : h === 2 ? 'שעתיים' : h + ' שעות';
+  const amt = !h ? m + ' דק׳' : !m ? hs : hs + ' ו-' + m + ' דק׳';
+  return sp.v === 0 ? 'בשקיעה' : (sp.v < 0 ? amt + ' לפני השקיעה' : amt + ' אחרי השקיעה');
+}
+function blDaysText(mask){
+  if (mask === 0x7f) return 'כל יום';
+  const names = [];
+  for (let i = 0; i < 7; i++) if (mask & (1 << i)) names.push(DAYNAMES[i]);
+  return names.length ? names.join(', ') : 'בלי ימים';
+}
+
+function blRender(){
+  const st = BL.cached, online = blOnline(), now = blNow();
+  document.getElementById('blBoxTag').textContent = blBox();
+  const c = blConnText();
+  const conn = document.getElementById('blConn');
+  conn.textContent = c.t; conn.classList.toggle('bad', c.bad);
+
+  const hero = document.getElementById('blHero');
+  const big = document.getElementById('blBig'), sub = document.getElementById('blSub');
+  hero.classList.toggle('on', !!(st && st.on && online));
+  if (!st) { big.textContent = '—'; sub.textContent = ''; }
+  else if (!st.clockValid) { big.textContent = 'השעון לא מכוון'; sub.textContent = 'שום דבר לא יילחץ עד שיהיה אינטרנט, או עד שתכוון מהטלפון.'; }
+  else if (st.on) { big.textContent = 'דולקת'; sub.textContent = 'עד ' + blWhen(st.until, now) + (st.renewAt >= 0 ? ' · חידוש הבא ' + blParts(st.renewAt).hm : ''); }
+  else { big.textContent = 'כבויה'; sub.textContent = st.next >= 0 ? 'ההדלקה הבאה: ' + blWhen(st.next, now) : 'אין מנות פעילות'; }
+
+  /* אזהרות */
+  const warns = [];
+  if (st && st.pc === 0) warns.push('לא נבחר מה לעשות אחרי הפסקת חשמל באמצע מנה. עד שתבחר בהגדרות, המכשיר לא נוגע במנה שכבר התחילה.');
+  if (st && !st.rtc) warns.push('המכשיר לא מוצא את מודול השעון.');
+  const wb = document.getElementById('blWarn');
+  wb.innerHTML = ''; warns.forEach(w => { const d = document.createElement('div'); d.textContent = w; wb.appendChild(d); });
+  wb.classList.toggle('hide', !warns.length);
+  document.getElementById('blClock').classList.toggle('hide', !(st && !st.clockValid));
+
+  /* הקרובות */
+  const occ = document.getElementById('blOcc');
+  occ.innerHTML = '';
+  const list = st && st.occ ? st.occ : [];
+  if (!list.length) occ.innerHTML = '<div class="bl-empty">' + (st ? 'אין מנות בשבוע הקרוב.' : 'ממתין למכשיר…') + '</div>';
+  list.forEach(o => {
+    const row = document.createElement('div'); row.className = 'bl-row';
+    let tag = ['ממתינה',''];
+    if (o.de) tag = ['בוצעה','ok'];
+    else if (o.ds) tag = ['דולקת','on'];
+    else if (now >= o.e) tag = ['לא בוצעה','miss'];
+    else if (now >= o.s) tag = ['לא הודלקה','miss'];
+    const crosses = Math.floor(o.e/1440) !== Math.floor(o.s/1440);
+    row.innerHTML = `<div class="grow"><div class="t num"></div><div class="d"></div></div><span class="bl-tag ${tag[1]}"></span>`;
+    row.querySelector('.t').textContent = blParts(o.s).hm + ' – ' + blParts(o.e).hm;
+    row.querySelector('.d').textContent = blDayName(o.s, now) + (crosses ? ' עד ' + blDayName(o.e, now) : '') + '. משך ' + blDur(o.e - o.s) + ' שעות';
+    row.querySelector('.bl-tag').textContent = tag[0];
+    occ.appendChild(row);
+  });
+
+  /* מנות */
+  const ss = document.getElementById('blSess');
+  ss.innerHTML = '';
+  const sess = st && st.sessions ? st.sessions : [];
+  if (!sess.length) ss.innerHTML = '<div class="bl-empty">' + (st ? 'אין מנות. לחץ + כדי להוסיף.' : '—') + '</div>';
+  sess.forEach((s, i) => {
+    const row = document.createElement('button'); row.className = 'bl-row' + (s.on ? '' : ' off');
+    row.innerHTML = '<div class="grow"><div class="t num"></div><div class="d"></div></div><span class="bl-tag"></span>';
+    row.querySelector('.t').textContent = blSpecText(s.start) + ' – ' + blSpecText(s.end);
+    row.querySelector('.d').textContent = blDaysText(s.days);
+    row.querySelector('.bl-tag').textContent = s.on ? 'פעילה' : 'כבויה';
+    row.addEventListener('click', () => blEdit(i));
+    ss.appendChild(row);
+  });
+
+  /* הגדרות */
+  document.querySelectorAll('#blPc button').forEach(b => b.setAttribute('aria-pressed', String(!!st && st.pc === +b.dataset.v)));
+  document.getElementById('blPcHint').textContent = st ? (st.pc === 0 ? 'לא נבחר.' : '') : '';
+  if (st && st.timer) [['blTm', st.timer], ['blRn', st.renew]].forEach(([id, v]) => {
+    const el = document.getElementById(id);
+    if (document.activeElement !== el && !el.dataset.dirty) el.value = v;
+  });
+  if (st && st.ang) ['blA0','blA1','blA2','blA3'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (document.activeElement !== el && !el.dataset.dirty) el.value = st.ang[i];
+  });
+  const lg = document.getElementById('blLog');
+  const W = { 'start':'הדלקה', 'end':'כיבוי', 'restart':'הדלקה מחדש', 'renew':'חידוש', 'mark-end':'סומן כסיום בלי לחיצה',
+              't-power':'בדיקה: הפעלה', 't-heat':'בדיקה: HEAT', 't-seq':'בדיקה: הפעלה + HEAT' };
+  const S = { 'schedule':'', 'recovery':' · אחרי אתחול', 'jump':' · אחרי תיקון שעון', 'phone':' · מהטלפון' };
+  lg.textContent = '';
+  if (st && st.log && st.log.length) st.log.forEach(e => {
+    const d = document.createElement('div');
+    d.textContent = (e.at >= 0 ? blWhen(e.at, now) : '—') + ' · ' + (W[e.what] || e.what) + (S[e.src] || '');
+    lg.appendChild(d);
+  });
+  else lg.textContent = 'אין עדיין, מאז האתחול האחרון.';
+}
+
+/* ---------- שקיעה לתצוגה מקדימה בעורך (ירושלים, כמו בקושחה) ---------- */
+function blSunset(date){
+  const keep = SUN; SUN = { label:'', lat:BL_JLM.lat, lon:BL_JLM.lon };
+  const s = sunTimes(date); SUN = keep;
+  return s ? s.set : 18*60;
+}
+function blResolve(sp, date){ return sp.a === 0 ? sp.v : blSunset(date) + sp.v; }
+
+/* ---------- עורך מנה ---------- */
+function blEdit(idx){
+  const st = BL.cached;
+  if (!st) return;
+  BL.editIdx = idx;
+  const s = idx >= 0 ? st.sessions[idx] : { on:1, days:1<<5, start:{a:0, v:22*60}, end:{a:0, v:6*60} };
+  BL.draft = JSON.parse(JSON.stringify(s));
+  document.getElementById('bsTitle').textContent = idx >= 0 ? 'עריכת מנה' : 'מנה חדשה';
+  document.getElementById('bsDel').classList.toggle('hide', idx < 0);
+  document.getElementById('bsErr').textContent = '';
+  blSyncSheet();
+  open('bsScrim');
+}
+function blSyncSheet(){
+  const d = BL.draft;
+  const days = document.getElementById('bsDays');
+  days.innerHTML = '';
+  BL_DAYS.forEach((n, i) => {
+    const b = document.createElement('button'); b.textContent = n; b.title = DAYNAMES[i];
+    b.setAttribute('aria-pressed', String(!!(d.days & (1 << i))));
+    b.addEventListener('click', () => { d.days ^= 1 << i; blSyncSheet(); });
+    days.appendChild(b);
+  });
+  [['Start', d.start], ['End', d.end]].forEach(([k, sp]) => {
+    document.querySelectorAll('#bs' + k + 'Kind button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.a === sp.a)));
+    document.getElementById('bs' + k + 'T').classList.toggle('hide', sp.a !== 0);
+    document.getElementById('bs' + k + 'T').textContent = fmtMin(sp.a === 0 ? sp.v : 0);
+    const off = document.getElementById('bs' + k + 'Off');
+    off.classList.toggle('hide', sp.a !== 1);
+    off.querySelector('.tv').textContent = blSpecText(sp);
+  });
+  document.getElementById('bsOn').checked = !!d.on;
+
+  /* תצוגה מקדימה: המופע הקרוב */
+  const prev = document.getElementById('bsPrev');
+  prev.classList.remove('bad');
+  if (!d.days) { prev.textContent = 'בחר לפחות יום אחד.'; prev.classList.add('bad'); return; }
+  const base = new Date(); base.setHours(0,0,0,0);
+  let day = null;
+  for (let i = 0; i < 8 && !day; i++){ const x = new Date(base); x.setDate(x.getDate() + i); if (d.days & (1 << x.getDay())) day = x; }
+  const sm = blResolve(d.start, day);
+  let em = blResolve(d.end, day), endDay = day;
+  if (em <= sm) { endDay = new Date(day); endDay.setDate(endDay.getDate() + 1); em = blResolve(d.end, endDay) + 1440; }
+  const dur = em - sm;
+  const endName = em >= 1440 ? DAYNAMES[(day.getDay() + 1) % 7] : DAYNAMES[day.getDay()];
+  prev.textContent = `הקרוב: ${DAYNAMES[day.getDay()]} ${fmtMin(sm)} עד ${endName} ${fmtMin(em)}. משך: ${blDur(dur)} שעות.`;
+  const rn = (BL.cached && BL.cached.renew) || 170;
+  const renews = Math.max(0, Math.floor((dur - 1) / rn));
+  if (renews) prev.textContent += ` ${renews === 1 ? 'חידוש אחד' : renews + ' חידושים'} בדרך, כל ${blDur(rn)}.`;
+  if (dur > 1380) { prev.textContent += ' ארוכה מ-23 שעות.'; prev.classList.add('bad'); }
+}
+['Start', 'End'].forEach(k => {
+  const sp = () => k === 'Start' ? BL.draft.start : BL.draft.end;
+  document.querySelectorAll('#bs' + k + 'Kind button').forEach(b => b.addEventListener('click', () => {
+    const s = sp(), a = +b.dataset.a;
+    if (s.a === a) return;
+    s.a = a; s.v = a === 0 ? (k === 'Start' ? 22*60 : 6*60) : (k === 'Start' ? 0 : 480);
+    blSyncSheet();
+  }));
+  document.getElementById('bs' + k + 'T').addEventListener('click', () => {
+    const s = sp();
+    clk.h = Math.floor(s.v / 60); clk.m = s.v % 60 - (s.v % 60) % 5; clk.phase = 'h';
+    clkHook = (h, m) => { s.v = h * 60 + m; blSyncSheet(); };
+    drawClock(); open('clkScrim');
+  });
+  document.querySelectorAll('#bs' + k + 'Off .stepbtn').forEach(b => b.addEventListener('click', () => {
+    const s = sp(); s.v = Math.max(-720, Math.min(720, s.v + (+b.dataset.d))); blSyncSheet();
+  }));
+});
+document.getElementById('bsOn').addEventListener('change', e => { BL.draft.on = e.target.checked ? 1 : 0; });
+document.getElementById('bsClose').addEventListener('click', () => close('bsScrim'));
+
+const BL_ERR = {
+  'overlap':   'המנה חופפת למנה אחרת, או שיש ביניהן פחות משתי דקות',
+  'too-long':  'המנה ארוכה מ-23 שעות',
+  'same-time': 'ההתחלה והסיום באותה שעה',
+  'no-days':   'לא נבחר אף יום',
+  'bad-time':  'שעה ביחס לשקיעה יוצאת מגבולות היום',
+  'no-clock':  'השעון של המכשיר לא מכוון, ולכן אי אפשר לבדוק את הרשימה',
+  'timeout':   'המכשיר לא ענה',
+  'mqtt-down': 'אין חיבור לברוקר'
+};
+function blErrText(e){
+  const b = e.body || {};
+  let t = BL_ERR[e.message] || ('השמירה נכשלה (' + e.message + ')');
+  if (b.day >= 0) { const p = blParts(b.day * 1440); t += ` (לראשונה ביום ${DAYNAMES[p.wd]} ${p.dd}.${p.mo})`; }
+  return t + '.';
+}
+async function blSaveList(list){
+  const sessions = list.map(s => ({ id:s.id || 0, on:s.on ? 1 : 0, days:s.days, start:s.start, end:s.end }));
+  await blApi('/api/sessions', { sessions });
+}
+document.getElementById('bsSave').addEventListener('click', async () => {
+  const list = BL.cached.sessions.slice();
+  if (BL.editIdx >= 0) list[BL.editIdx] = BL.draft; else list.push(BL.draft);
+  const err = document.getElementById('bsErr');
+  err.textContent = 'שומר…';
+  try { await blSaveList(list); close('bsScrim'); }
+  catch(e){ err.textContent = blErrText(e); }
+});
+document.getElementById('bsDel').addEventListener('click', async () => {
+  if (!confirm('למחוק את המנה?')) return;
+  const list = BL.cached.sessions.filter((_, i) => i !== BL.editIdx);
+  const err = document.getElementById('bsErr');
+  err.textContent = 'מוחק…';
+  try { await blSaveList(list); close('bsScrim'); }
+  catch(e){ err.textContent = blErrText(e); }
+});
+document.getElementById('blAdd').addEventListener('click', () => {
+  if (!BL.cached) { alert('השמיכה לא מחוברת.'); return; }
+  if (BL.cached.sessions.length >= 8) { alert('אפשר עד 8 מנות.'); return; }
+  blEdit(-1);
+});
+
+/* ---------- הגדרות ---------- */
+document.querySelectorAll('#blPc button').forEach(b => b.addEventListener('click', async () => {
+  try { await blApi('/api/settings', { pc:+b.dataset.v }); } catch(e){ alert('השמירה נכשלה.'); }
+}));
+['blA0','blA1','blA2','blA3','blTm','blRn'].forEach(id => document.getElementById(id).addEventListener('input', e => { e.target.dataset.dirty = '1'; }));
+document.getElementById('blTmSave').addEventListener('click', async () => {
+  const timer = +document.getElementById('blTm').value, renew = +document.getElementById('blRn').value;
+  if (!(timer >= 30 && timer <= 720 && renew >= 20 && renew < timer)) { alert('הטיימר בין 30 ל-720 דקות, והחידוש קצר ממנו.'); return; }
+  try { await blApi('/api/settings', { timer, renew }); ['blTm','blRn'].forEach(id => delete document.getElementById(id).dataset.dirty); }
+  catch(e){ alert('השמירה נכשלה.'); }
+});
+document.getElementById('blAngSave').addEventListener('click', async () => {
+  const ang = ['blA0','blA1','blA2','blA3'].map(id => +document.getElementById(id).value);
+  if (ang.some(a => !(a >= 0 && a <= 180))) { alert('כל זווית בין 0 ל-180.'); return; }
+  try { await blApi('/api/settings', { ang }); ['blA0','blA1','blA2','blA3'].forEach(id => delete document.getElementById(id).dataset.dirty); }
+  catch(e){ alert('השמירה נכשלה.'); }
+});
+document.querySelectorAll('.bl-btns button[data-k]').forEach(b => b.addEventListener('click', async () => {
+  const name = { power:'הפעלה', heat:'HEAT', seq:'הפעלה ואז HEAT' }[b.dataset.k];
+  if (!confirm(`ללחוץ עכשיו ${name}? זה משנה את מצב השמיכה, והמכשיר לא יודע על זה.`)) return;
+  const stat = document.getElementById('blTestStat');
+  stat.textContent = 'לוחץ…';
+  try { await blApi('/api/press', { k:b.dataset.k }); stat.textContent = 'נלחץ.'; }
+  catch(e){ stat.textContent = 'לא נלחץ: ' + (BL_ERR[e.message] || e.message) + '.'; }
+}));
+document.getElementById('blNet').addEventListener('click', openNet);
+document.getElementById('blClock').addEventListener('click', async () => {
+  const n = new Date();
+  try { await blApi('/api/time', { y:n.getFullYear(), mo:n.getMonth()+1, d:n.getDate(), h:n.getHours(), mi:n.getMinutes(), s:n.getSeconds() }); }
+  catch(e){ alert('הכוונון נכשל.'); }
+});
+
+/* ---------- מעבר בין המכשירים: פס תחתון עם המצב החי של כל אחד, והחלקה לצדדים ---------- */
+const TAB_KEY = 'mazgan.tab';
+function acSummary(){
+  const st = MQ.cached;
+  if (!st || Date.now() - MQ.cachedAt > 45000) return { t: mqReady() ? 'לא מחובר' : 'לא מוגדר', dot:'away' };
+  const r = st.remote || {};
+  if (!r.on) return { t:'כבוי', dot:'' };
+  const m = (CAPS.modes || []).find(x => x.v === r.mode);
+  return { t:(m ? m.label : (r.mode || '')) + (r.temp ? ' · ' + r.temp + '°' : ''), dot: r.mode === 'cool' ? 'cool' : 'on' };
+}
+function blSummary(){
+  const st = BL.cached, now = blNow();
+  if (!blOnline()) return { t: mqReady() ? 'לא מחוברת' : 'לא מוגדרת', dot:'away' };
+  if (!st.clockValid) return { t:'השעון לא מכוון', dot:'away' };
+  if (st.on) return { t:'דולקת עד ' + blParts(st.until).hm, dot:'on' };
+  return { t: st.next >= 0 ? 'כבויה · ' + blWhen(st.next, now) : 'כבויה', dot:'' };
+}
+function drawTabs(){
+  [['ac', acSummary()], ['bl', blSummary()]].forEach(([k, s]) => {
+    const b = document.querySelector('#tabs button[data-tab="' + k + '"]');
+    b.querySelector('.st').textContent = s.t;
+    b.querySelector('.dot').className = 'dot' + (s.dot ? ' ' + s.dot : '');
+  });
+}
+function setTab(t){
+  document.body.classList.toggle('tab-bl', t === 'bl');
+  document.querySelectorAll('#tabs button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.tab === t)));
+  try{ localStorage.setItem(TAB_KEY, t); } catch(e){}
+  if (t === 'bl') blRender();
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll('#tabs button').forEach(b => b.addEventListener('click', () => setTab(b.dataset.tab)));
+/* החלקה: אצבע שזזה שמאלה → שמיכה (היא משמאל בפס), ימינה → מזגן.
+   לא מתחילה בשדה האוויר (שם גוררים טמפרטורה), בפקדי טווח, בשעון או בחלון פתוח. */
+(() => {
+  let x0 = null, y0 = 0, t0 = 0;
+  document.addEventListener('touchstart', e => {
+    const tg = e.target;
+    if (!FAR || DEMO || e.touches.length !== 1 || tg.closest('.air, input, textarea, .face, .sky, .scrim.open, .tabs')) { x0 = null; return; }
+    x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; t0 = Date.now();
+  }, { passive:true });
+  document.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+    x0 = null;
+    if (Date.now() - t0 > 600 || Math.abs(dx) < 70 || Math.abs(dy) > Math.abs(dx) * 0.6) return;
+    setTab(dx < 0 ? 'bl' : 'ac');
+  }, { passive:true });
+})();
+if (FAR && !DEMO) {
+  document.getElementById('tabs').classList.add('show');
+  document.body.classList.add('has-tabs');
+  let t = 'ac'; try{ t = localStorage.getItem(TAB_KEY) || 'ac'; } catch(e){}
+  setTab(t);
+  drawTabs();
+  setInterval(drawTabs, 2000);
+  setInterval(() => { if (document.body.classList.contains('tab-bl')) blRender(); }, 15000);
+}
 
 /* ---------- PWA — רק כשהדף לא מוגש מהקופסה ---------- */
 if (FAR) {
